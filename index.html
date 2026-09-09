@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>居家服務教戰手冊｜碼別執行指引與常見誤區</title>
+<meta name="description" content="給居家服務員與照顧服務督導的碼別查詢手冊：每個 BA 碼的服務範圍、一定要做、絕對不要、執行細節、常見誤區與互斥搭配。">
+<style>
+:root{
+  --teal:#028090; --teal-deep:#025E6A; --teal-soft:#E3F1F3;
+  --ink:#12343B; --orange:#E8552D; --orange-soft:#FCEBE5;
+  --amber:#F4A93C; --amber-soft:#FEF3E0;
+  --bg:#F2F5F4; --paper:#FFFFFF; --line:#D6E0DE; --muted:#5A6D71;
+  --shadow:0 1px 0 rgba(18,52,59,.06);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft JhengHei","PingFang TC","Noto Sans TC","Heiti TC",system-ui,sans-serif;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--teal-deep)}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+/* 頁首 */
+.masthead{background:var(--ink);color:#fff;padding:26px 18px 22px}
+.masthead .wrap{max-width:1180px;margin:0 auto}
+.masthead h1{margin:0;font-size:clamp(26px,4.2vw,38px);line-height:1.25;letter-spacing:.01em;font-weight:700}
+.masthead h1 span{display:block;font-size:.5em;font-weight:500;opacity:.85;margin-bottom:8px}
+.masthead p{margin:12px 0 0;max-width:62ch;opacity:.9;font-size:15px;line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:14px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* 工具列 */
+.toolbar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+.toolbar .wrap{max-width:1180px;margin:0 auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.search{display:flex;gap:8px;align-items:center}
+.search input{flex:1;min-width:0;font-size:18px;padding:11px 14px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.search input:focus{border-color:var(--teal)}
+.search .clear{border:none;background:transparent;color:var(--muted);padding:6px 10px;border-radius:8px}
+.search .clear:hover{background:var(--bg)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;color:var(--ink);padding:5px 12px;border-radius:999px;font-size:14px;line-height:1.4;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.toolrow{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.toggle{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px 4px 6px;color:var(--ink);font-size:14px}
+.toggle .knob{width:34px;height:20px;border-radius:999px;background:#C9D3D1;position:relative;transition:background .15s}
+.toggle .knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.toggle[aria-pressed="true"] .knob{background:var(--teal)}
+.toggle[aria-pressed="true"] .knob::after{transform:translateX(14px)}
+
+/* 版面 */
+.layout{max-width:1180px;margin:0 auto;padding:18px 14px 80px;display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:960px){.layout{grid-template-columns:230px 1fr;gap:28px;padding:26px 18px 100px}}
+.sidenav{display:none}
+@media (min-width:960px){
+  .sidenav{display:block;position:sticky;top:118px;align-self:start;max-height:calc(100vh - 130px);overflow:auto;padding-right:6px}
+  .sidenav h2{font-size:13px;color:var(--muted);margin:14px 0 6px;font-weight:600}
+  .sidenav h2:first-child{margin-top:0}
+  .sidenav a{display:flex;gap:8px;align-items:baseline;text-decoration:none;color:var(--ink);padding:4px 8px;border-radius:8px;font-size:14px;line-height:1.5}
+  .sidenav a:hover{background:var(--teal-soft)}
+  .sidenav a b{font-family:inherit;color:var(--teal-deep);min-width:52px;font-weight:700}
+}
+main{min-width:0}
+section.block{margin-bottom:34px}
+section.block>h2{font-size:22px;margin:0 0 4px;display:flex;align-items:baseline;gap:10px}
+section.block>h2 small{font-size:14px;color:var(--muted);font-weight:500}
+section.block>.lead{margin:0 0 14px;color:var(--muted);font-size:15px;max-width:70ch}
+
+/* 通用守則 */
+.rules{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:700px){.rules{grid-template-columns:1fr 1fr}}
+.rule{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.rule h3{margin:0 0 6px;font-size:16px;color:var(--teal-deep)}
+.rule ul{margin:0;padding-left:20px}
+.rule li{margin:3px 0}
+
+/* 碼別卡 */
+.cards{display:grid;grid-template-columns:1fr;gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;scroll-margin-top:130px}
+.card.hit{border-color:var(--teal)}
+.card-head{width:100%;text-align:left;border:none;background:transparent;padding:0;display:grid;grid-template-columns:auto 1fr auto;gap:0;align-items:stretch;color:inherit}
+.code{background:var(--teal);color:#fff;font-weight:800;font-size:22px;letter-spacing:.02em;padding:14px 12px;display:flex;align-items:center;justify-content:center;min-width:92px;line-height:1}
+.code.aa{background:var(--ink)}
+.code.ga{background:var(--amber);color:var(--ink)}
+.code small{font-size:12px;font-weight:600;opacity:.85;margin-left:2px}
+.card-title{padding:11px 12px 10px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.card-title h3{margin:0;font-size:18px;line-height:1.35}
+.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:13.5px;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.tag{font-size:12px;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.tag.train{background:var(--amber-soft);border-color:#F0D3A0;color:#7A4E00}
+.tag.temp{background:var(--teal-soft);border-color:#B6D9DE;color:var(--teal-deep)}
+.tag.solo{background:var(--orange-soft);border-color:#F3C0AF;color:#9A2E10}
+.caret{display:flex;align-items:center;padding:0 14px;color:var(--muted)}
+.caret svg{width:20px;height:20px;transition:transform .18s}
+.card[open] .caret svg{transform:rotate(180deg)}
+.card-body{display:none;border-top:1px solid var(--line);padding:6px 14px 16px}
+.card[open] .card-body{display:block}
+.part{margin:12px 0 0;padding:10px 14px 10px 16px;border-left:5px solid var(--line);border-radius:0 10px 10px 0;background:#FAFBFB}
+.part h4{margin:0 0 5px;font-size:15px;display:flex;align-items:center;gap:8px}
+.part ul{margin:0;padding-left:20px}
+.part li{margin:4px 0}
+.part.scope{border-color:var(--ink)}
+.part.must{border-color:var(--teal);background:var(--teal-soft)}
+.part.must h4{color:var(--teal-deep)}
+.part.never{border-color:var(--orange);background:var(--orange-soft)}
+.part.never h4{color:#B23A17}
+.part.pit{border-color:var(--amber);background:var(--amber-soft)}
+.part.pit h4{color:#8A5300}
+.part.detail{border-color:#9FB4B8}
+.part.rel{border-color:#9FB4B8}
+.part.sup{border-color:var(--ink);background:#EEF2F2}
+.part.sup h4{color:var(--ink)}
+.hidden-sup .part.sup{display:none}
+.codelink{display:inline-block;font-weight:700;color:var(--teal-deep);text-decoration:none;border-bottom:2px solid #B6D9DE;padding:0 1px;line-height:1.3}
+.codelink:hover{background:var(--teal-soft)}
+.pit-item b{color:#8A5300}
+.pit-item{margin:6px 0}
+.pit-item .fix{display:block;color:var(--ink);margin-top:2px}
+.pit-item .fix::before{content:"正確做法：";font-weight:700;color:var(--teal-deep)}
+
+/* 速查表 */
+.table-wrap{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--teal-soft);color:var(--teal-deep);font-weight:700;font-size:14px}
+tr:last-child td{border-bottom:none}
+td .x{color:var(--orange);font-weight:700}
+td .ok{color:var(--teal-deep);font-weight:700}
+
+/* 情境快問 */
+.faq{display:grid;gap:8px}
+.faq details{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:0}
+.faq summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none;display:flex;gap:10px;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"問";flex:0 0 auto;background:var(--amber);color:var(--ink);font-size:13px;font-weight:700;border-radius:6px;padding:1px 7px;margin-top:3px}
+.faq details[open] summary{border-bottom:1px solid var(--line)}
+.faq .a{padding:10px 16px 14px 16px;display:flex;gap:10px;align-items:flex-start}
+.faq .a::before{content:"答";flex:0 0 auto;background:var(--teal);color:#fff;font-size:13px;font-weight:700;border-radius:6px;padding:1px 7px;margin-top:3px}
+.faq .a div{min-width:0}
+
+.note{background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:12px 16px;font-size:14.5px;color:var(--muted)}
+.empty{display:none;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:center;color:var(--muted)}
+.empty.show{display:block}
+
+.topbtn{position:fixed;right:14px;bottom:14px;z-index:15;background:var(--ink);color:#fff;border:none;border-radius:999px;width:46px;height:46px;font-size:20px;opacity:0;pointer-events:none;transition:opacity .15s;box-shadow:0 4px 14px rgba(18,52,59,.25)}
+.topbtn.show{opacity:1;pointer-events:auto}
+
+footer{max-width:1180px;margin:0 auto;padding:0 18px 40px;color:var(--muted);font-size:13.5px;line-height:1.6}
+
+@media print{
+  .toolbar,.sidenav,.topbtn{display:none!important}
+  body{background:#fff;font-size:12pt}
+  .card-body{display:block!important}
+  .card{break-inside:avoid;box-shadow:none}
+  .caret{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <h1><span>愛迪樂居家服務團隊</span>居家服務教戰手冊</h1>
+    <p>依《長期照顧服務申請及給付辦法》附表四（114 年 6 月 19 日修正、115 年 1 月 1 日全面施行版）整理。每個碼別分成「服務範圍、一定要做、絕對不要、常見誤區、執行細節、互斥與搭配」六段，新手照著做、老手快速查、督導處理申訴與異常時對照用。</p>
+    <div class="legend">
+      <span><i style="background:var(--teal)"></i>一定要做</span>
+      <span><i style="background:var(--orange)"></i>絕對不要</span>
+      <span><i style="background:var(--amber)"></i>常見誤區</span>
+      <span><i style="background:#C9D3D1"></i>執行細節與搭配</span>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap">
+    <div class="search">
+      <input id="q" type="search" placeholder="輸入碼別或關鍵字，例如：BA07、洗頭、管灌、共用區域、1.5 小時" aria-label="搜尋碼別或關鍵字" autocomplete="off">
+      <button class="clear" id="clearBtn" type="button" aria-label="清除搜尋">清除</button>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="類別篩選"></div>
+    <div class="toolrow">
+      <span id="count"></span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">
+        <button class="toggle" id="supToggle" type="button" aria-pressed="false"><span class="knob"></span>督導檢核</button>
+        <button class="toggle" id="expandAll" type="button" aria-pressed="false"><span class="knob"></span>全部展開</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidenav" id="sidenav" aria-label="碼別目錄"></nav>
+  <main id="main">
+
+    <section class="block" id="sec-rules">
+      <h2>先讀這一頁 <small>每次到宅都適用的通則</small></h2>
+      <p class="lead">碼別規範再細，也建立在下面這些基本功上。督導遇到申訴，第一步通常也是核對這幾件事。</p>
+      <div class="rules">
+        <div class="rule"><h3>照顧計畫就是你的服務範圍</h3><ul>
+          <li>只做核定計畫上有的碼別與次數；家屬臨時追加的項目，先回報督導或 A 個管，不自行答應、不自行申報。</li>
+          <li>臨時性、突發性需求（如個案腹瀉、跌倒後需協助）只有特定碼別可以先做後補，見「臨時服務速查」。</li>
+          <li>額度用完仍要服務時，屬自費項目，收費須依機構經主管機關核定之標準，不得私下議價。</li></ul></div>
+        <div class="rule"><h3>紀錄要能還原現場</h3><ul>
+          <li>每碼寫「做了哪些項目、起訖時間、個案反應」，不要只寫「已完成」。</li>
+          <li>以 30 分鐘計價的碼別（BA02、BA13、BA15、BA18、BA20）只能報實際執行時間，時段之間不得重疊。</li>
+          <li>異常（生命徵象、皮膚、情緒、跌倒、拒絕服務）當天回報，並留紀錄。</li></ul></div>
+        <div class="rule"><h3>同一時段只能是一個碼</h3><ul>
+          <li>BA02、BA18、BA20、BA22 明定「不得與其他組合併用」（可接續）。</li>
+          <li>清潔家族 BA01、BA07、BA23 彼此同時段互斥；BA24 若在 BA01 或 BA07 過程中一併完成，不得另計。</li>
+          <li>加計碼（AA）是「加在服務上」，不是獨立服務，也不扣個案額度、免部分負擔。</li></ul></div>
+        <div class="rule"><h3>安全與倫理底線</h3><ul>
+          <li>不代管金錢、存摺、印章；代購一律記帳、附收據。</li>
+          <li>不執行侵入性醫療行為；BA17 系列限完成認可訓練者依指引執行，有疑慮先問護理人員。</li>
+          <li>個案抗拒、家屬要求超出範圍、環境不安全，先停、先回報，不硬做。</li>
+          <li>疑似虐待、疏忽、跌倒受傷，依機構通報流程處理，不私下協調。</li></ul></div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-ba">
+      <h2>照顧服務碼別 <small>BA 碼，居服員實際執行的項目</small></h2>
+      <p class="lead">點碼別展開。價格為一般區／原民區或離島支付價格（新臺幣元）。部分負擔一般戶 16%、中低收 5%、低收 0%。</p>
+      <div class="cards" id="cards-ba"></div>
+    </section>
+
+    <section class="block" id="sec-aa">
+      <h2>加計碼 <small>AA 碼，加在服務上、不扣額度、免部分負擔</small></h2>
+      <p class="lead">加計碼是「符合條件就該申報」的項目，漏報等於單位少收、居服員少領。條件是否成立，以核定資料（等級、身障證明、問題清單）為準。</p>
+      <div class="cards" id="cards-aa"></div>
+    </section>
+
+    <section class="block" id="sec-ga">
+      <h2>居家喘息 <small>GA09，另一包額度，也是居服員在做</small></h2>
+      <div class="cards" id="cards-ga"></div>
+    </section>
+
+    <section class="block" id="sec-quick">
+      <h2>互斥與臨時服務速查</h2>
+      <p class="lead">申報前先對這張表。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>情形</th><th>規則</th><th>怎麼做</th></tr></thead>
+          <tbody>
+            <tr><td>BA01、BA07、BA23 同時段</td><td><span class="x">互斥</span></td><td>浴間執行整套就是 BA07 一組合；床上擦澡 BA01；單獨洗頭 BA23。擇一。</td></tr>
+            <tr><td>BA24 與 BA01／BA07</td><td><span class="x">過程中一併完成不得併計</span></td><td>排泄照護若是獨立時段執行（如上午 BA24、下午 BA07）可分別申報。</td></tr>
+            <tr><td>BA02、BA18、BA20、BA22</td><td><span class="x">不得與其他組合併用</span></td><td>可接續，但時段不得重疊；BA22 完全不得搭配其他碼。</td></tr>
+            <tr><td>BA13 與 BA12</td><td><span class="ok">可併用</span></td><td>外出需協助上下樓梯且符合 BA12 條件時併報。</td></tr>
+            <tr><td>BA14 超過 1.5 小時</td><td><span class="ok">轉 BA13</span></td><td>自案家出門起算 1.5 小時內 BA14；超過部分依實際時數改用 BA13。</td></tr>
+            <tr><td>AA08 與 AA09 同日</td><td><span class="x">不得同時申請</span></td><td>晚間服務、例假日服務擇一。</td></tr>
+            <tr><td>AA05 加計</td><td><span class="ok">照顧服務可加</span></td><td>但 BA16 代購除外；同單位同個案一日一次。</td></tr>
+            <tr><td>可依第 21 條臨時先做後補</td><td><span class="ok">限下列碼別</span></td><td>BA01、BA07、BA12、BA14、BA17a、BA17b、BA17c、BA17d1、BA17d2、BA23、BA24。做完立即通知 A 個管，經照管中心確認後才可申報。</td></tr>
+            <tr><td>BA02、BA05、BA13、BA15、BA16 等</td><td><span class="x">不得臨時提供</span></td><td>不在第 21 條名單內，未核定就不能做、不能報。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" id="sec-faq">
+      <h2>情境快問 <small>督導與居服員最常卡住的問題</small></h2>
+      <div class="faq" id="faq"></div>
+    </section>
+
+    <section class="block" id="sec-appendix">
+      <h2>附錄 <small>額度、部分負擔與訓練要求</small></h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>長照需要等級</th><th>照顧及專業服務額度（元／月）</th><th>一般戶自付 16% 上限</th></tr></thead>
+          <tbody>
+            <tr><td>第 2 級</td><td>10,020</td><td>1,603</td></tr>
+            <tr><td>第 3 級</td><td>15,460</td><td>2,474</td></tr>
+            <tr><td>第 4 級</td><td>18,580</td><td>2,973</td></tr>
+            <tr><td>第 5 級</td><td>24,100</td><td>3,856</td></tr>
+            <tr><td>第 6 級</td><td>28,070</td><td>4,491</td></tr>
+            <tr><td>第 7 級</td><td>32,090</td><td>5,134</td></tr>
+            <tr><td>第 8 級</td><td>36,180</td><td>5,789</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:12px">聘僱外籍看護工之個案，照顧及專業服務額度僅給付 30%；但 BA09、BA09a 到宅沐浴車不受此限制（額度仍以 30% 計）。需「完成認可訓練」才能執行的碼別：BA08、BA09、BA09a、BA17a、BA17b；AA11 加計須完成失智症訓練或身心障礙服務相關訓練。</p>
+    </section>
+
+    <div class="empty" id="empty">找不到符合的碼別。試試輸入碼別（如 BA15）或項目名稱（如 家務）。</div>
+  </main>
+</div>
+
+<button class="topbtn" id="topBtn" type="button" aria-label="回到頁首">↑</button>
+
+<footer>
+  本手冊為機構內部教育訓練與查詢用途，內容依 114 年 6 月 19 日修正發布之《長期照顧服務申請及給付辦法》附表四整理，實務判定以各縣市照管中心核定之照顧計畫、地方主管機關及機構規範為準。法規如有修正，以最新公告為準。
+</footer>
+
+<script>
+const DATA = [
+{code:"BA01", name:"基本身體清潔", cat:"清潔沐浴", unit:"1 次", price:"260 / 310", tags:["temp"],
+ scope:["梳頭修面、穿脫衣服、床上擦澡、床上洗頭、排泄物清理（含當次更換尿片、倒尿袋或相關協助）。","床上洗頭及排泄物清理，個案如無需求得不執行。","原則一日一組合；必要時得早晚各一組合，但要寫進照顧計畫。"],
+ must:["服務前確認室溫、水溫（手腕內側試溫）、拉上門簾或圍屏保護隱私。","擦澡順序由乾淨到髒：臉、頸、上肢、胸腹、背、下肢，最後會陰與臀部；毛巾分區使用。","邊擦邊看皮膚：壓瘡、紅疹、破皮、水腫、瘀青，有變化當天記錄並回報。","當次更換的尿片、倒掉的尿袋都屬本組合內容，不另報。","做完把個案安置成安全舒適姿勢、床欄拉起，整理用物。"],
+ never:["同一時段併報 [[BA07]] 或 [[BA23]]。","在浴間淋浴卻報 BA01（那是 [[BA07]]）；原床泡澡、床上沐浴也比照 BA07，不是 BA01。","把早晚兩次拆成時間相連的兩筆紀錄；早晚各一組合必須是兩個明顯分開的時段。","擦澡過程中順手做的排泄處理再疊報 [[BA24]]。","為湊次數只擦一小部分就報一組合。"],
+ pitfalls:[["家屬要求「順便換床單」也算在 BA01 裡？","不算。更換床單、整理床屬 [[BA02]]，要看計畫是否核定 BA02。"],["個案今天狀況好，想坐到浴室沖澡。","就變成 [[BA07]]，不能仍報 BA01；若計畫只核 BA01，先回報督導與 A 個管。"],["個案腹瀉弄髒全身，計畫今天沒排 BA01。","本碼可依第 21 條臨時提供，做完立即通知 A 個管，經照管中心確認後申報。"]],
+ detail:["得依第 21 條臨時先做後補。","紀錄寫明本次執行了哪些項目（例如：床上擦澡＋更換尿片，未洗頭）。","水溫建議 38～41°C，有溫度計更好；個案有周邊神經病變時不要只憑個案說法判斷冷熱。"],
+ rel:["同時段互斥：[[BA07]]、[[BA23]]。","不得併計：[[BA24]]（過程中一併完成時）。","常見搭配：[[BA02]] 接續；[[AA06]] 有管路、傷口、燒燙傷或移位困難且體重逾 70 公斤；[[AA04]] 臨終日或前一日、後一日。"],
+ sup:["抽核同日兩筆 BA01 的起訖時間是否確實分開，以及計畫是否核定早晚各一次。","紀錄若每天只寫「已完成」，要求居服員改寫具體項目。","申訴「沒有洗頭」時，先確認個案是否表達無需求（附表允許不執行）。"]},
+
+{code:"BA02", name:"基本日常照顧", cat:"日常照顧", unit:"每 30 分鐘", price:"195 / 235", tags:["solo"],
+ scope:["協助翻身、移位、上下床、坐下、離座、刷牙洗臉、穿脫衣服、如廁、更換尿片或衛生棉、倒尿桶、清洗便桶、造廔袋清理、清洗臉或手、刮鬍子、修剪指（趾）甲、協助用藥、服藥、整理床、更換床單、會陰沖洗（無使用身體清潔）或相關協助。","未列項目但屬基本日常照顧，得經照管中心同意後比照列入。","一日限使用 3 小時。"],
+ must:["只報實際執行時間，滿 30 分鐘為一單位；不足單位依機構規定，先問清楚再報。","紀錄寫具體項目與起訖時間（例如 09:00–09:30 協助如廁、刷牙洗臉、更換床單）。","協助用藥一律依藥袋標示，確認姓名、藥名、時間、劑量；只協助拿取與提醒服用，不自行分藥、不調整劑量。","移位、上下床先確認輪椅煞車、床高、地面乾燥，使用移位腰帶或移位板。","修剪指甲平剪、留一點白邊，剪前泡溫水軟化。"],
+ never:["與其他組合同一時段併用（本碼是「不得併用」，比互斥更嚴）。","把 BA02 當萬用碼：陪聊天報 BA02（應為 [[BA20]]）、掃地報 BA02（應為 [[BA15]]）、備餐報 BA02（應為 [[BA05]]）。","把擦澡、沐浴拆進 BA02 湊時數。","糖尿病個案的問題甲、厚甲用 BA02 處理（應為 [[BA08]]，且需完成認可訓練）。","一日超過 3 小時。"],
+ pitfalls:[["個案上完廁所要清理，報 BA02 還是 BA24？","單純協助如廁在 BA02 範圍內；獨立執行的排泄照護（造口袋更換排空、失禁處理指導、觀察排泄物）才是 [[BA24]]。以核定計畫為準。"],["家屬希望居服員幫全家整理床鋪。","服務對象只有個案本人，其他家人的床不在範圍。"],["做了 20 分鐘就結束。","不足一單位是否可報，各機構規定不同；不得把 20 分鐘填成 30 分鐘。"]],
+ detail:["會陰沖洗若非在身體清潔過程中執行，屬本碼。","本碼不在第 21 條臨時服務名單內，未核定不可先做後補。"],
+ rel:["不得併用：所有組合（可接續）。","常見接續：[[BA01]] 或 [[BA07]] 之後接 BA02 整理床單、換衣。","可加計：[[AA06]] 對 12 歲以下個案提供 BA02；[[AA11]] 對符合資格之身障或失智個案。"],
+ sup:["紀錄若每天都是整數 3 小時且內容雷同，要求補具體項目與時間。","確認 30 分鐘不足單位的機構計價規則已書面告知居服員與家屬。","家屬申訴「什麼都沒做」時，用紀錄的項目清單逐項核對。"]},
+
+{code:"BA03", name:"測量生命徵象", cat:"日常照顧", unit:"1 次", price:"35 / 40", tags:[],
+ scope:["因疾病需要應進行之監測：測量血壓、體溫、脈搏及呼吸；記錄及異常時轉知家屬與個案管理員（或照顧管理專員）。","須為配合個案生理狀況、獨立於其他服務之監測。"],
+ must:["讓個案靜坐或平躺休息 5 分鐘再量，手臂與心臟同高。","四項數值都記（血壓、體溫、脈搏、呼吸），寫數值不寫「正常」。","超過機構設定的異常值（例如收縮壓高於 180 或低於 90、體溫 38°C 以上、脈搏異常）立即通知家屬與個管，有急性症狀撥 119。","器材用個案自備或機構提供者，定期校正。"],
+ never:["沐浴前量血壓判斷能不能洗澡，再報一筆 BA03（這是服務前觀察，附表明定不適用）。","照顧計畫沒有核定，卻每次到宅都量一次順便申報。","只量血壓其他三項不記。"],
+ pitfalls:[["個案有高血壓，每次去都量，可以都報嗎？","要看計畫核定的頻次。核定 BA03 的前提是「因疾病需要應進行之監測」，不是到宅例行動作。"],["量完發現血壓 190，個案說沒事。","仍要通知家屬與個管並記錄，不因個案主觀感受省略。"]],
+ detail:["建議固定時段、固定手臂測量，數值才有比較意義。","本碼不在臨時服務名單內。"],
+ rel:["可加計：[[AA07]] 家庭照顧功能微弱之個案提供 BA03 時。"],
+ sup:["抽核 BA03 是否與 BA07 同時段申報且無獨立監測目的。","檢視異常數值是否有回報紀錄。"]},
+
+{code:"BA04", name:"協助進食或管灌餵食", cat:"餐食", unit:"一餐", price:"130 / 155", tags:[],
+ scope:["進食環境（含個案安置）準備、加熱飯菜、餐具準備、協助餵食（或灌食）、觀察進食之量及反應、提供個案及家屬諮詢討論、善後。","對個案或家庭照顧者給予指導、鼓勵或參與式照顧。","單純加熱飯菜、非自製食物（如市售管灌配方、牛奶）之灌食屬本碼。"],
+ must:["進食前坐正或床頭抬高 30～45 度以上；餐後維持坐姿至少 30 分鐘。","由口進食：小口慢餵、確認吞完再下一口、留意嗆咳與含在口中不吞；依專業建議調整質地。","管灌：灌食前確認管路位置與固定、回抽胃殘餘量（依護理指導之標準）、配方溫度接近體溫、速度緩慢、灌後以溫開水沖管。","記錄進食量（幾分之幾或毫升）與反應。","善後：清潔餐具、口腔清潔、收拾環境。"],
+ never:["平躺灌食或餵食。","灌食後立即翻身拍背（順序應先 [[BA10]] 再灌食）。","把在案家煮飯報 BA04（那是 [[BA05]]）。","一餐報兩單位。","個案有嗆咳、發燒、腹脹仍照灌不回報。"],
+ pitfalls:[["把家屬煮好的菜加熱後餵食，是 BA05 嗎？","不是，加熱飯菜與餵食是 BA04。BA05 是「在案家備餐」。"],["管灌一天三餐，可以報三次？","可以，一餐一組合，但要在核定計畫的次數內。"],["個案自己吃，居服員只在旁邊看。","仍屬協助進食（環境準備、觀察、善後），但要有實質協助內容並記錄。"]],
+ detail:["餵食速度以個案能吞完為準，不趕時間。","鼻胃管若滑脫、阻塞，不自行處理，通知家屬與護理人員。"],
+ rel:["分界：[[BA05]] 備餐；[[BA10]] 先做再灌食。","可加計：[[AA07]]、[[AA11]]。"],
+ sup:["紀錄應有進食量與反應，僅寫「已餵食」不足。","確認居服員知道該個案的質地要求與灌食標準（來自護理或營養指導）。"]},
+
+{code:"BA05", name:"餐食照顧", cat:"餐食", unit:"備餐 1 次或 1 日管灌飲食", price:"310 / 370", tags:[],
+ scope:["在案家備餐、備餐後用具及餐具善後與清潔，備餐一次為一組合。","在案家準備一日所需之管灌飲食及善後清潔，一日一組合。","同住之長照給付對象共同使用時，僅擇一人扣額度及部分負擔。"],
+ must:["用案家食材烹煮，先確認飲食禁忌（糖尿病、腎病、吞嚥困難）與質地要求。","備餐前後洗手、生熟分開、剩菜標示日期冷藏。","自製管灌飲食依專業指導的配方與份量攪打、分裝、冷藏標示。","清潔廚具餐具、擦拭爐台，恢復原狀。"],
+ never:["為全家煮飯（服務對象是個案本人；家屬份量不在範圍）。","買菜也算在 BA05 裡（採買屬 [[BA16]]）。","一次煮好兩餐卻報兩組合。","單純加熱、市售管灌配方灌食報 BA05（應為 [[BA04]]）。"],
+ pitfalls:[["同住的夫妻都是長照個案，一起煮飯要各扣一次？","不用，僅擇一人扣額度與部分負擔。"],["家屬說多煮一點沒關係。","仍以個案份量為準，避免日後申訴與稽核爭議；家屬需求請走自費或自行處理。"]],
+ detail:["本碼不在臨時服務名單內。","備餐後若接著餵食，餵食屬 [[BA04]]，需另有核定。"],
+ rel:["分界：[[BA04]]、[[BA16]]。","可加計：[[AA11]]。"],
+ sup:["申訴「幫全家煮飯」多來自居服員好意，訓練時明確劃線。","抽核備餐與代購同日申報時是否有實際兩段作業。"]},
+
+{code:"BA07", name:"協助沐浴及洗頭", cat:"清潔沐浴", unit:"1 次", price:"325 / 385", tags:["temp"],
+ scope:["協助或引導至浴間、穿脫衣服、全身淋浴、坐浴或盆浴、洗頭、排泄物清理（含當次更換尿片、倒尿袋）、浴間事前準備及事後清理。","洗頭及排泄物清理，個案如無需求得不執行。","指於浴間（或類似場所）執行；床上擦澡屬 BA01；床上沐浴或原床泡澡比照本組合。","已包含 BA01、BA23 之內容。"],
+ must:["事前：檢查地面防滑、沐浴椅或扶手、水溫（38～41°C）、備妥毛巾衣物放在伸手可及處。","過程中不離開個案視線；沖水先沖四肢再沖軀幹，避免直沖頭部。","鼓勵個案自己做能做的部分（拿蓮蓬頭、擦前胸），這是附表要求的參與式照顧。","沐浴後立即擦乾、保暖、檢視皮膚與趾縫，協助穿衣後才處理浴間。","有傷口、管路、燒燙傷或移位困難且體重逾 70 公斤者，記得申報 [[AA06]]。"],
+ never:["同一時段併報 [[BA01]] 或 [[BA23]]。","沐浴前量血壓另報 [[BA03]]。","個案明顯不適（頭暈、臉色蒼白、發燒）仍執行。","浴間濕滑就直接讓個案走，未鋪防滑墊或未扶持。","為了方便把個案留在浴室自己去拿東西。"],
+ pitfalls:[["先床上擦澡再單獨洗頭，可以報 BA01 加 BA23 嗎？","若是在浴間做整套，就是 BA07 一組合，不得拆碼。床上擦澡加床上洗頭也是 [[BA01]] 一組合。"],["個案臥床，家屬買了充氣浴槽在床上洗。","床上沐浴比照 BA07。"],["個案今天不想洗頭。","可不執行洗頭，仍報 BA07；紀錄註明。"]],
+ detail:["得依第 21 條臨時先做後補。","失智個案抗拒沐浴：先安撫、改時段、由熟悉的人陪同，不強迫；抗拒或攻擊行為可申報 [[AA05]]。"],
+ rel:["同時段互斥：[[BA01]]、[[BA23]]。","不得併計：[[BA24]]（過程中一併完成）。","可加計：[[AA06]]、[[AA05]]、[[AA11]]、[[AA07]]、[[AA04]]（臨終日或前一日）。","替代方案：長照 5～8 級可評估 [[BA09]] 到宅沐浴車。"],
+ sup:["跌倒事件最常發生在沐浴，稽核時檢視浴室安全用具是否到位、居服員是否受過移位訓練。","AA06 漏報是常見損失，定期比對個案清單（管路、體重）。"]},
+
+{code:"BA08", name:"足部照護", cat:"清潔沐浴", unit:"1 次", price:"500 / 600", tags:["train"],
+ scope:["評估趾甲及足部皮膚；趾甲及周圍修剪、足部長繭處之處理、足部按摩及保養；轉介必要之醫療處置；紀錄。","限經診斷為糖尿病之個案，且照顧問題清單包含走路問題、皮膚照護問題或傷口問題，並有足部脫皮、龜裂、角質硬化（繭、雞眼）或問題甲（厚甲、捲甲、輕微崁甲）之一。","應由完成認可訓練之照顧服務人員提供。"],
+ must:["先評估：足部感覺、循環（膚色、溫度、足背動脈）、有無傷口、紅腫、化膿。","趾甲平剪、不剪太短、不修圓角；厚甲先泡軟再分次修薄。","繭以磨砂、銼刀處理，不可用刀片削。","工具一案一消毒；乳液保養時避開趾縫。","發現傷口、感染、嚴重崁甲、發黑，停止處理並轉介就醫，記錄。","拍照紀錄依機構規定並經同意。"],
+ never:["未完成認可訓練者執行。","對開放性傷口、感染、發黑的足部進行修剪。","一般日常指（趾）甲修剪報 BA08（應為 [[BA02]]）。","使用刀片、剪刀削繭。"],
+ pitfalls:[["個案有糖尿病，就可以用 BA08？","還要同時符合：問題清單有走路、皮膚照護或傷口問題，且足部實際有脫皮龜裂角質硬化或問題甲。"],["個案沒有糖尿病但趾甲很厚。","不符合 BA08 資格；一般修剪屬 BA02，嚴重問題甲建議就醫。"]],
+ detail:["本碼自 115 年 1 月 1 日施行修正版。","不在臨時服務名單內。"],
+ rel:["分界：[[BA02]]。","可加計：[[AA07]]。"],
+ sup:["建立 BA08 合格人員名單，派案時比對。","審核個案是否同時符合診斷、問題清單與足部狀況三條件。"]},
+
+{code:"BA09", name:"到宅沐浴車服務—第一型", cat:"清潔沐浴", unit:"1 次", price:"2,200 / 2,640", tags:["train"],
+ scope:["限經評估核定長照需要等級第 5 至 8 級之個案。","以專用車輛（電源、加熱系統、水箱等）攜帶組合式行動浴槽至案家：沐浴前評估、全身式沐浴、沐浴後設備管理維護；含架設沐浴裝置、運用入浴安全移位技巧協助身體清潔與穿換衣服、設備清理消毒保養。","至少由 3 位完成認可訓練之照顧服務人員組成團隊提供。"],
+ must:["到宅前電話確認個案當日狀況（發燒、腹瀉、剛進食）。","沐浴前後測量生命徵象並記錄（本組合內含，不另報 BA03）。","三人分工明確：一人主責頭頸與觀察、一人身體清潔、一人設備與水溫。","入浴與出浴的移位使用吊帶或移位技巧，全程至少兩人扶持。","設備使用後消毒、水路排空，記錄保養。"],
+ never:["未滿 3 人出勤。","個案急性不適仍執行。","與 [[BA07]] 同日重複申報同一次沐浴。"],
+ pitfalls:[["個案聘有外籍看護，可以用沐浴車嗎？","可以，本碼不受第 10 條第 2 項限制，但額度仍僅給付照顧及專業服務額度之 30%。"],["個案有鼻胃管。","有留置管路、呼吸器、燒燙傷或三級傷口者應使用 [[BA09a]]（需護理人員）。"]],
+ detail:["本碼自 115 年 1 月 1 日施行修正版。"],
+ rel:["進階：[[BA09a]]。","可加計：[[AA06]]（管路、傷口或體重逾 70 公斤者）、[[AA05]]。"],
+ sup:["派案前核對長照等級 5～8 級與人力名單。","外籍看護個案額度 30% 規則要提前告知家屬。"]},
+
+{code:"BA09a", name:"到宅沐浴車服務—第二型", cat:"清潔沐浴", unit:"1 次", price:"2,500 / 3,000", tags:["train"],
+ scope:["限長照需要等級第 5 至 8 級，且有留置管路（氣切、鼻胃管、胃造廔口、導尿管、膀胱造廔口、結腸造廔口）、使用呼吸器、燒燙傷及三級傷口之個案。","沐浴內容同 BA09；另由護理人員做沐浴前後生命徵象評估、身體評估、傷口評估與護理、衛教指導，包含三管護理、緊急狀況處理與指揮，並對主要照顧者衛教。","至少由 1 位完成認可訓練之護理人員及 2 位完成認可訓練之照顧服務人員組成團隊提供。"],
+ must:["護理人員全程在場並主導評估、管路固定與緊急處理。","照服員依護理指示執行清潔，避開傷口與管路固定處。","沐浴後傷口護理、管路重新固定，並記錄。"],
+ never:["無護理人員或人數不足仍出勤。","照服員自行處理傷口或管路。"],
+ pitfalls:[["個案只有導尿管，用 BA09 就好？","導尿管屬留置管路，應使用 BA09a。"]],
+ detail:["外籍看護個案同樣可使用，額度以 30% 計。","本碼自 115 年 1 月 1 日施行修正版。"],
+ rel:["基本型：[[BA09]]。","可加計：[[AA06]]、[[AA05]]。"],
+ sup:["核對護理人員與照服員的認可訓練證明。"]},
+{code:"BA10", name:"翻身拍背", cat:"身體照顧", unit:"完整實施 1 次", price:"155 / 190", tags:[],
+ scope:["扣背、震顫、翻身，及相關照顧指導（依衛生福利部所定指引執行）。","完整實施一次為一給付單位。"],
+ must:["時機：餐前或餐後 1～2 小時，灌食前執行。","手掌呈杯狀、手腕放鬆有節奏扣擊，由下往上、由外往內，每側約 3～5 分鐘。","避開脊椎、腎臟區、肋骨下緣、傷口、造口與管路固定處。","翻身後以枕頭支撐背部與雙腿間，維持 30 度側臥，檢查受壓處皮膚。","觀察痰液顏色、量與呼吸聲，異常回報。"],
+ never:["灌食或進食後立即拍背。","對嚴重骨質疏鬆、肋骨骨折、出血傾向、胸腔手術後未經指示者用力扣擊。","只翻身沒拍背卻報整組（個案若不需拍背，應在計畫載明並依機構規定申報）。","翻身時拖拉個案皮膚（應抬起或用移位滑墊）。"],
+ pitfalls:[["一天翻身好幾次，每次都能報？","以核定次數為準；本碼是「完整實施一次」為單位，不是每次翻身都算。"],["個案有氣切。","拍背前後留意分泌物增加，需要抽吸時依 [[BA17a]]、[[BA17b]] 由完訓人員執行。"]],
+ detail:["依機構教育訓練之衛福部指引操作。","本碼不在臨時服務名單內。"],
+ rel:["順序：BA10 之後再 [[BA04]] 灌食。","可加計：[[AA07]]。"],
+ sup:["確認居服員接受過翻身拍背指引訓練並有紀錄。"]},
+
+{code:"BA11", name:"肢體關節活動", cat:"身體照顧", unit:"完整實施 1 次", price:"195 / 235", tags:[],
+ scope:["上肢、下肢被動運動，或督促個案進行主動運動或站立練習（依衛生福利部所定指引執行）。","完整實施一次為一給付單位。"],
+ must:["每個關節各方向緩慢做到個案可耐受範圍，以無痛為原則，每個動作 5～10 次。","一手固定關節近端、一手支撐遠端，動作平順不甩動。","有專業服務（[[CA07]] 復能）指導者，依治療師給的動作內容與次數執行。","站立練習使用穩固支撐物，居服員站在個案較弱側。","記錄執行部位與個案反應（疼痛、僵硬變化）。"],
+ never:["硬拉攣縮或腫痛的關節。","急性關節腫痛、骨折未癒合、剛手術部位未經指示執行。","只做上肢或只做幾下就報整組。","邊看手機邊做。"],
+ pitfalls:[["個案自己會動，只要在旁邊督促也算？","算。附表明定「督促個案進行主動運動或站立練習」也是本碼內容，但要有實質督促與記錄。"],["治療師來的那天可以一起做嗎？","可以，且應申報 [[AA03]] 照顧服務員配合專業服務（同時段需執行 BA 碼）。"]],
+ detail:["本碼不在臨時服務名單內。"],
+ rel:["搭配：[[AA03]]、[[CA07]]。","可加計：[[AA07]]。"],
+ sup:["復能個案的 BA11 內容應與 C 碼計畫一致，抽核紀錄是否對得上。"]},
+
+{code:"BA12", name:"協助上（下）樓梯", cat:"外出移動", unit:"1 次", price:"130 / 155", tags:["temp"],
+ scope:["協助上（下）樓梯、協助輪椅搬運上（下）樓梯，樓梯數為一層樓以上（含）。範圍包含個案住家內及二樓以上之家門口至一樓。","限問題清單顯示「移位問題」或「上下樓梯問題」者。","不適用於使用電梯、爬梯機、樓梯升降椅者。"],
+ must:["上樓時居服員在個案後下方，下樓時在個案前下方，隨時可扶。","輪椅搬運至少兩人，先確認煞車、腳踏板收起、個案繫安全帶。","完全依賴、需兩名以上照服員才能完成者，申報 [[AA06]]。","可自行坐起但離床需協助且體重逾 70 公斤者，也適用 AA06。"],
+ never:["屋內平面移位、只跨幾階報 BA12（須一層樓以上）。","搭電梯、使用爬梯機（[[EH04]] 租賃）仍報 BA12。","一人硬扛輪椅上下樓。"],
+ pitfalls:[["個案住三樓，出門看診上下各一次，報幾次？","上樓一次、下樓一次，以核定計畫與機構規定為準；外出本身另報 [[BA13]] 或 [[BA14]]。"],["問題清單沒有移位問題，但個案真的下不了樓。","不符合本碼資格，請 A 個管重新評估問題清單。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["併用：[[BA13]] 外出、[[BA14]] 就醫時。","可加計：[[AA06]]、[[AA07]]。"],
+ sup:["派案前確認住家樓層與電梯狀況，避免不符資格申報。"]},
+
+{code:"BA13", name:"陪同外出", cat:"外出移動", unit:"每 30 分鐘", price:"195 / 235", tags:[],
+ scope:["外出工具之安排、陪同外出、注意安全。","外出目的包括：購物、社交活動、辦理事務、參與宗教活動、用餐、散步、上下學、定期式復健或透析治療、運動或其他情形。","金額不含外出之交通工具；符合 BA12 條件時與 BA12 併同使用。"],
+ must:["出門前確認證件、藥物、輔具、飲水、天氣，並讓家屬知道去處與預計時間。","全程在個案身側，過馬路、上下車、進出電梯特別扶持。","記錄外出目的、地點、起訖時間。","定期復健、透析用本碼，不用 BA14。"],
+ never:["外出期間另報 [[BA20]] 陪伴或 [[BA02]]。","一般門診就醫報 BA13（1.5 小時內應用 [[BA14]]）。","用自己的機車載送個案（依機構規定，多數禁止；安全與保險風險）。","把個案獨自留在店裡或車上。"],
+ pitfalls:[["陪同就醫超過 1.5 小時之後呢？","超過部分依實際時數改用 BA13，須通知 A 個管並經照管中心確認。"],["外出 50 分鐘，報幾單位？","實際時間計，不足 30 分鐘部分依機構規定，不可湊成 2 單位。"]],
+ detail:["本碼不在臨時服務名單內。","交通費（計程車、復康巴士）由個案負擔或依 [[DA01]] 交通接送另計。"],
+ rel:["併用：[[BA12]]。","分界：[[BA14]]。","可加計：[[AA11]]。"],
+ sup:["定期透析個案若長期報 BA14，是常見錯碼，應改 BA13。"]},
+
+{code:"BA14", name:"陪同就醫", cat:"外出移動", unit:"1 次", price:"685 / 825", tags:["temp"],
+ scope:["協助掛號（含預約）、個案準備、陪同就診、聽取及轉知醫囑與注意事項。","不含個案與居服員之就醫交通費。","不適用定期式復健或透析治療。","以陪同就醫為主，自案家出門起算 1.5 小時內適用；超過 1.5 小時得依實際時數使用 BA13。"],
+ must:["出門前備妥健保卡、慢箋、藥袋、輔具與家屬聯絡方式。","看診時記下醫囑、回診日、用藥變更，當天轉知家屬並記錄。","出門時間要記，1.5 小時是計算基準。","突發就醫可依第 21 條臨時提供，做完立即通知 A 個管。"],
+ never:["代替個案或家屬做醫療決定、簽同意書。","定期復健、透析報 BA14。","把等候時間全部報 BA14 再另加 BA13 重複計算。","交通費算進本碼向家屬額外收費以外的名目。"],
+ pitfalls:[["就醫來回 3 小時。","BA14 一次（含出門起 1.5 小時），超過的 1.5 小時依實際時數用 [[BA13]] 3 單位，並經照管中心確認。"],["同一天看兩科。","以核定計畫與機構規定為準；紀錄需能區分兩次就診。"]],
+ detail:["醫囑轉知是本碼的核心內容，紀錄要寫醫囑重點。"],
+ rel:["延伸：[[BA13]]。","併用：[[BA12]]。","可加計：[[AA07]]。","家庭照顧者的居家喘息也可加計 BA14（見 [[GA09]]）。"],
+ sup:["申訴多發生在醫囑未轉知，訓練居服員用固定格式記錄醫囑。"]},
+
+{code:"BA15", name:"家務協助", cat:"家務代購", unit:"每 30 分鐘", price:"195 / 235", tags:[],
+ scope:["獨居個案：居家生活空間之清理或洗滌、衣物洗滌及晾曬烘乾（含至自助洗衣店洗衣）、熨燙、衣物簡單縫補及相關家事服務。","非獨居個案：睡眠及主要居家生活空間之清理洗滌、衣物洗滌晾曬烘乾、熨燙、簡單縫補。","清理洗滌包含吸塵或濕式清洗、沖洗或除塵，非大掃除。","非獨居個案之共用區域僅支付 50%，另 50% 由個案自付；個案使用之臥室與浴室不論是否共用，均不屬共用區域。"],
+ must:["先確認個案是否為核定的「獨居」，服務範圍與計價差很多。","非獨居者只整理個案臥室、浴室與個案主要活動空間；共用區域（客廳、廚房）要事先讓家屬知道 50% 自付。","衣物只洗個案的；使用案家清潔用品與洗衣機。","記錄整理了哪些空間、多少時間。"],
+ never:["大掃除、擦窗、洗冷氣、清油煙機、整理儲藏室。","打掃家人的房間、洗全家衣服。","自行認定獨居（獨居定義由附表規定並經核定）。","與 [[BA02]] 或其他碼同一時段疊報。"],
+ pitfalls:[["個案與兒子同住，兒子 50 歲健康，算獨居嗎？","不算。同住家人須每人符合：未滿 18 歲、18～64 歲領身障證明、18～64 歲長照 2～8 級、65 歲以上、經確診失智症之一。"],["夫妻都是長照個案且同一臥室。","僅擇一人扣額度與部分負擔；不同臥室則各自扣。"],["家屬要求順便拖客廳。","客廳屬共用區域，50% 自付，且要在核定範圍內。"]],
+ detail:["本碼不在臨時服務名單內。","獨居個案復能目標若含自行學習家務整理，配合專業服務可申報 [[AA03]]。"],
+ rel:["分界：[[BA16]] 代購、[[BA05]] 備餐。","可加計：[[AA03]]（限獨居且復能目標含家務）。"],
+ sup:["家務是申訴與稽核重災區，派案前把「獨居與否、共用區域、自付比例」寫進服務契約並簽名。"]},
+
+{code:"BA16", name:"代購或代領或代送服務", cat:"家務代購", unit:"1 次", price:"130 / 155", tags:[],
+ scope:["目的物品或事項包括：餐食、食材、生活用品、藥品、郵寄、補助品、衣物床單送洗（或取回）及必要之辦理事項（如洽政府機關或繳費）。","含購物清單規劃與確認、購物、購買物品之清理與歸位及記帳，從事前準備到善後之完整服務。","物品應為個案本身所需；含家人物品時僅支付 50%。","自案家出門起算 5 公里內適用；超過部分費用由個案自付。"],
+ must:["出門前與個案（或家屬）確認清單與預算，回來逐項核對、交付收據並記帳。","代領藥品確認處方箋、健保卡與領藥期限。","物品歸位、冷藏品先收，記錄品項與金額。","購物款項由個案預付或依機構規定處理，不代墊大額。"],
+ never:["代管個案存摺、提款卡、印章。","幫家人買東西全額申報。","超過 5 公里不事先告知自費。","購物沒有收據、沒有記帳。"],
+ pitfalls:[["順便去買菜再回來煮飯，報一個碼就好？","不是，採買是 BA16、備餐是 [[BA05]]，兩碼各有核定才能各報。"],["家屬請居服員幫忙繳全家的水電費。","屬個案本身事項才算；混合家人事項時僅支付 50%。"]],
+ detail:["本碼不在臨時服務名單內。","照顧困難加計 [[AA05]] 不適用本碼。"],
+ rel:["分界：[[BA05]]、[[BA15]]。","不可加計：[[AA05]]。"],
+ sup:["金錢糾紛最常來自代購，建立固定的代購記帳單並月結給家屬。"]},
+
+{code:"BA17a", name:"人工氣道管內（非氣管內管）分泌物抽吸", cat:"醫療相關", unit:"1 次", price:"75 / 90", tags:["train","temp"],
+ scope:["人工氣道管內（非氣管內管）分泌物之清潔、抽吸與移除；氣切造口分泌物之簡易照顧處理（含銜接造口設備、更換紗布及固定帶）。","如需同時處理口腔內（懸壅垂之前）分泌物，可另加計 BA17b。","應由完成認可訓練之照顧服務人員提供。","原則一日以 3 組合為限。"],
+ must:["無菌技術：洗手、戴手套、抽吸管一次一支、抽吸前後給氧或深呼吸（依指導）。","每次抽吸不超過 10～15 秒，抽吸壓力依指引設定。","觀察痰液顏色、量、黏稠度與個案血氧、呼吸，記錄。","氣切固定帶更換時兩人操作或先固定新帶再解舊帶。","抽吸後管路清潔、設備歸位、廢棄物依規定處理。"],
+ never:["未完訓者執行。","抽吸氣管內管（插管）——那不在照服員範圍。","反覆使用同一支抽吸管。","發現出血、呼吸急促、血氧下降仍繼續，應停止並通知護理人員或 119。"],
+ pitfalls:[["一天需要抽 5 次。","原則一日 3 組合為限；超過需求請 A 個管評估專案處理，並依機構規定。"],["口腔痰也要抽。","可另加計 [[BA17b]]。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["併用：[[BA17b]]。","相關：[[BA10]] 拍背後分泌物增加時執行。"],
+ sup:["定期複訓與技術考核，保留紀錄。"]},
+
+{code:"BA17b", name:"口腔內（懸壅垂之前）分泌物抽吸", cat:"醫療相關", unit:"1 次", price:"65 / 80", tags:["train","temp"],
+ scope:["口腔內（懸壅垂之前）分泌物之清潔、抽吸與移除。","應由完成認可訓練之照顧服務人員提供。","原則一日以 3 組合為限。"],
+ must:["個案側臥或頭側一邊，抽吸管只到懸壅垂之前，不深入咽喉。","每次短時間、輕柔，避免刺激嘔吐反射。","抽吸後口腔清潔、觀察黏膜有無破損。"],
+ never:["深入咽喉或鼻腔抽吸。","未完訓者執行。"],
+ pitfalls:[["和 BA17a 同時做。","可分別申報，附表明定可另加計。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["併用：[[BA17a]]。"],
+ sup:["確認人員完訓證明。"]},
+
+{code:"BA17c", name:"尿管及鼻胃管之清潔與固定", cat:"醫療相關", unit:"1 次", price:"50 / 60", tags:["temp"],
+ scope:["尿管清潔：陰部與尿道口及尿道口外之尿管沖洗、更換尿管固定膠布。","鼻胃管清潔：清潔鼻部皮膚、確認管路位置是否滑脫、更換鼻胃管固定膠布。","原則每週以 7 組合為限。"],
+ must:["由上往下、由內往外清潔尿道口，尿袋低於膀胱、不拖地。","更換膠布時一手固定管路，換位置貼避免壓瘡。","確認鼻胃管刻度與固定位置，有滑脫、阻塞、皮膚破損立即通知護理人員。","記錄管路外露長度與皮膚狀況。"],
+ never:["自行更換或重新置入管路。","拉扯管路、用力沖洗。","發現異常自行處理不通報。"],
+ pitfalls:[["每天做兩次可以嗎？","每週以 7 組合為限，等於平均一天一次；超過需求由 A 個管評估。"]],
+ detail:["得依第 21 條臨時先做後補。","本碼不要求認可訓練，但仍應依機構教育訓練執行。"],
+ rel:["相關：[[BA04]] 管灌前確認管路。"],
+ sup:["管路滑脫事件常源於固定不當，訓練固定手法並抽查。"]},
+
+{code:"BA17d1", name:"血糖機驗血糖", cat:"醫療相關", unit:"1 次", price:"50 / 60", tags:["temp"],
+ scope:["攜帶式血糖機驗血糖。","原則每日以 1 組合為限。"],
+ must:["洗手、酒精消毒待乾、指腹側邊採血、試紙未過期、機器校正。","記錄數值、時間、餐前或餐後。","異常值（依機構或醫囑設定，如低於 70 或高於 300）立即通知家屬與個管，低血糖先給糖。","針頭依規定丟棄。"],
+ never:["重複使用採血針。","只記「正常」。","異常值不通報。"],
+ pitfalls:[["家屬要求早晚各量一次。","原則每日 1 組合；額外需求依 A 個管評估與機構規定。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["相關：[[BA17e]] 置入藥盒（血糖藥）、[[BA08]] 足部照護（糖尿病）。"],
+ sup:["確認血糖機為個案自備或機構校正過的機器。"]},
+
+{code:"BA17d2", name:"甘油球通便", cat:"醫療相關", unit:"1 次", price:"50 / 60", tags:["temp"],
+ scope:["甘油球通便。","原則每週以 3 組合為限；特殊情況得由 A 個管評估、照管中心審核同意後專案核給次數（不逾額度）。"],
+ must:["左側臥屈膝、潤滑、緩慢插入，請個案保留 5～10 分鐘後排便。","觀察排便量、性狀與個案不適，記錄。","事後清潔皮膚、更換衣物。"],
+ never:["硬塞、多次強行。","有肛門出血、劇烈腹痛、疑似腸阻塞仍執行。","超過核定次數自行加做。"],
+ pitfalls:[["個案便秘嚴重每天都要。","先回報 A 個管，走專案核給；同時建議與營養、護理討論飲食與活動。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["相關：[[BA24]] 協助排泄。"],
+ sup:["專案核給次數要有照管中心核定紀錄。"]},
+
+{code:"BA17e", name:"依指示置入藥盒", cat:"醫療相關", unit:"1 次", price:"50 / 60", tags:[],
+ scope:["依照藥袋指示置入藥盒。","原則每週以 1 組合為限。"],
+ must:["核對藥袋姓名、藥名、劑量、時間（早午晚睡前），一次一個藥袋分裝。","分裝完請個案或家屬複核，記錄日期。","藥物變更時通知個管並重新分裝。"],
+ never:["憑記憶或口頭交代分藥。","自行拆開、磨粉、合併藥物。","把「協助服藥」也報 BA17e（服藥協助屬 [[BA02]]）。"],
+ pitfalls:[["藥盒一週裝一次，但個案臨時回診換藥。","重新分裝時仍以每週 1 組合為限，依機構規定處理。"]],
+ detail:["本碼不在臨時服務名單內。"],
+ rel:["分界：[[BA02]] 協助用藥。"],
+ sup:["藥物錯誤屬重大事件，要求分裝後複核簽名。"]},
+
+{code:"BA18", name:"安全看視", cat:"陪伴看視", unit:"每 30 分鐘", price:"200 / 240", tags:["solo"],
+ scope:["至案家陪伴、支持（如遊戲或嗜好）、看視注意安全或協助（如日常生活參與），並注意異常狀況。","限心智障礙者使用。","不得與其他組合併同使用，但可接續使用。"],
+ must:["看視期間全程在場、視線不離開個案，特別是遊走、開火、跌倒風險。","安排有意義的活動（簡單家務參與、興趣活動），不是只有看著。","記錄行為狀況、情緒與異常事件。"],
+ never:["看視期間同時做家務、備餐再另報。","邊看視邊處理自己的事。","非心智障礙者使用本碼（一般陪伴用 [[BA20]]）。"],
+ pitfalls:[["看視時個案想上廁所，可以協助嗎？","可以協助，但屬看視內容的一部分，不得另報 [[BA02]]；若要報 BA02 需另一個接續時段。"]],
+ detail:["本碼不在臨時服務名單內。"],
+ rel:["分界：[[BA20]]。","可加計：[[AA11]]、[[AA05]]。"],
+ sup:["核對個案身障證明類別是否符合心智障礙者。"]},
+
+{code:"BA20", name:"陪伴服務", cat:"陪伴看視", unit:"每 30 分鐘", price:"175 / 210", tags:["solo"],
+ scope:["至案家陪伴看視、日常生活參與，或讀紙本或電子新聞或書信。","不得與其他組合併同使用，但可接續使用。"],
+ must:["有內容的陪伴：聊天、讀報、一起做簡單活動、陪同在家活動。","觀察情緒、認知變化並記錄。","陪伴時段獨立記錄起訖時間。"],
+ never:["陪伴時間內同時做 BA02、BA15 再各報一筆。","陪伴變成滑手機、看電視。","外出時用 BA20（應為 [[BA13]]）。"],
+ pitfalls:[["家屬希望居服員來就是聊天陪伴 2 小時。","可以，但要核定 4 單位 BA20，且不得夾雜其他服務同時申報。"]],
+ detail:["本碼不在臨時服務名單內。"],
+ rel:["分界：[[BA18]]、[[BA13]]。","可加計：[[AA11]]。"],
+ sup:["紀錄應能看出陪伴內容，避免被認定為無服務事實。"]},
+
+{code:"BA22", name:"巡視服務", cat:"陪伴看視", unit:"1 次（含至少 3 次探視）", price:"130 / 160", tags:[],
+ scope:["上午 6 點至晚上 8 點，至案家探視個案並進行簡易協助，至少 3 次。","不得搭配本照顧組合表之其他照顧組合。","非上述時段之巡視，得經照管中心或地方主管機關審核同意後，依實際情況加計 AA08。"],
+ must:["每次探視記錄時間與個案狀況（清醒、進食、安全）。","簡易協助（倒水、拿物、確認門窗）即可，發現需求回報。","發現突發需求可依第 21 條提供得臨時提供的碼別，事後通知 A 個管。"],
+ never:["同日與其他碼別搭配申報。","3 次未達就申報。","探視變成長時間服務卻仍報巡視。"],
+ pitfalls:[["巡視時個案跌倒受傷。","先確保安全、通知家屬與 119（視情況），可臨時提供 BA01 等名單內碼別，之後通知 A 個管並經照管中心確認。"]],
+ detail:["適合獨居、需要多次確認安全的個案。"],
+ rel:["不得搭配：所有其他照顧組合。","可加計：[[AA08]]（非規定時段經審核）。"],
+ sup:["紀錄需有 3 個以上時間點。"]},
+
+{code:"BA23", name:"協助洗頭", cat:"清潔沐浴", unit:"1 次", price:"200 / 240", tags:["temp"],
+ scope:["協助移位或引導至浴間、穿脫衣服、洗頭、弄濕或弄髒之身體部位之清潔、環境之事前準備及事後整理。","指於床上或浴間（或類似場所）單獨執行洗頭之服務，同一時段不可併同申請 BA01 及 BA07。","對個案或家庭照顧者給予指導、鼓勵或參與式照顧。"],
+ must:["床上洗頭使用洗頭槽或防水墊，保護耳朵與眼睛。","水溫確認、洗後立即吹乾保暖。","弄濕的頸肩部位一併擦乾，屬本碼內容。"],
+ never:["同一時段併報 [[BA01]] 或 [[BA07]]。","在浴間做了全身沐浴卻只報 BA23。"],
+ pitfalls:[["洗頭順便擦背，可以加 BA01？","不行。單獨洗頭是 BA23；若當次執行了床上擦澡就是 [[BA01]] 一組合（含床上洗頭）。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["同時段互斥：[[BA01]]、[[BA07]]。","可加計：[[AA11]]、[[AA03]]。"],
+ sup:["BA23 與 BA01 同日申報時，檢視是否為不同時段實際分開執行。"]},
+
+{code:"BA24", name:"協助排泄", cat:"清潔沐浴", unit:"1 次", price:"220 / 265", tags:["temp"],
+ scope:["協助移位或引導至浴間、支持及協助一般小便、大便、處理汗、痰或嘔吐物、觀察排泄物、尿袋更換、造廔袋清理、人工肛門造口周圍之照料（含造口袋之更換和排空）、生殖器官照顧之事後檢視、介紹如何大小便控制或失禁處理。","如於執行 BA01 或 BA07 過程中同時執行，則不得併計。"],
+ must:["觀察排泄物顏色、量、性狀並記錄（血便、黑便、混濁尿立即回報）。","造口周圍皮膚檢視、清潔、造口袋更換依護理指導。","失禁處理同時做皮膚保護（清潔、拍乾、隔離乳）。","給個案與家屬失禁處理的簡單指導，這是本碼明定內容。"],
+ never:["在 BA01、BA07 過程中一併完成卻另報 BA24。","單純協助如廁（無排泄照護內容）報 BA24（一般協助如廁屬 [[BA02]]）。"],
+ pitfalls:[["尿袋更換與倒尿袋的差別？","倒尿袋屬 BA01、BA07 或 BA02 的內容；更換尿袋、造口袋屬 BA24。"],["早上 BA07 沐浴，下午單獨處理造口袋。","不同時段可分別申報 BA24。"]],
+ detail:["得依第 21 條臨時先做後補。"],
+ rel:["不得併計：[[BA01]]、[[BA07]]（同過程）。","分界：[[BA02]]。","相關：[[BA17d2]] 通便。"],
+ sup:["新手最常混淆 BA02 與 BA24，訓練時用「有沒有排泄照護內容」判斷。"]},
+{code:"AA03", name:"照顧服務員配合專業服務", cat:"加計", unit:"每個 C 碼組合 1 次", price:"600 / 720", tags:[], kind:"aa",
+ scope:["照顧服務員至少一次於專業服務（C 碼）提供時同行學習，且同時段提供居家照顧服務，並參與或協助執行後續專業服務計畫。","同時段之居家照顧服務應為 BA01～BA05、BA07、BA12、BA17d1、BA17d2、BA17e、BA23 之一；或 BA15（限獨居且復能目標含自行學習家務整理者）。","每個專業服務照顧組合（C 碼，不含 CC01）只能申請一次。"],
+ must:["與治療師約同一時段到宅，實際執行核定的 BA 碼。","把治療師教的動作、擺位、餵食方式記錄下來，之後服務照著做。","完整參與該 C 碼組合後再申報。"],
+ never:["只是「順便到場」沒做 BA 碼。","同一 C 碼組合申報第二次。","搭配名單以外的 BA 碼（如 BA13、BA20）。"],
+ pitfalls:[["個案有 CA07 復能，居服員可以報幾次 AA03？","一個 CA07 組合一次。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["搭配：[[BA11]] 最常見；[[CA07]]。"], sup:["確認專業服務紀錄與居服紀錄的日期時段一致。"]},
+
+{code:"AA04", name:"於臨終日提供服務加計", cat:"加計", unit:"限 1 次", price:"1,200 / 1,440", tags:[], kind:"aa",
+ scope:["於個案臨終日或前一日提供居家服務（BA 碼照顧組合），或後一日提供基本身體清潔（BA01），得加計。","只限申請一次。"],
+ must:["臨終後一日的服務僅 [[BA01]] 適用加計。","依家屬意願提供最後的身體清潔，尊重宗教與習俗。","保留服務紀錄與死亡日期佐證（依機構規定）。"],
+ never:["重複申請。","後一日提供 BA01 以外的碼別申請加計。"],
+ pitfalls:[["個案凌晨過世，早上居服員去了。","後一日提供 BA01 可加計。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["搭配：[[BA01]]。"], sup:["確認死亡日期與服務日期關係。"]},
+
+{code:"AA05", name:"照顧困難之服務加計", cat:"加計", unit:"每日 1 次", price:"200 / 240", tags:[], kind:"aa",
+ scope:["符合以下情形之一得加計：曾有抗拒照顧或攻擊行為；罹患傳染性疾病（疥瘡、肺結核、梅毒）；領有身障證明之慢性精神病患者、自閉症者、智能障礙者及失智症者；經確診之失智症者；長照 5 級以上且領有身障證明之頑性癲癇、植物人、罕見疾病；領有身障證明且 ICD 註記腦性麻痺（G80）或脊髓損傷（S14、S24、S34）、重大傷病證明或診斷證明之腦性麻痺與脊髓損傷者。","以日為加計單位，同服務單位同個案一日限一次。","限照顧服務（BA16 除外）、專業服務、喘息服務加計。"],
+ must:["核對資格文件（身障證明、診斷、重大傷病卡）建檔。","抗拒或攻擊行為要有紀錄。","傳染性疾病個案落實防護（手套、隔離衣、洗手）。"],
+ never:["代購 [[BA16]] 加計。","同一天同一單位報兩次。","沒有佐證資料就加計。"],
+ pitfalls:[["個案失智但沒有身障證明。","經確診之失智症者即可，不限身障證明。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["常搭：[[BA07]]、[[BA01]]、[[BA18]]。"], sup:["建立個案資格清單，避免漏報與誤報。"]},
+
+{code:"AA06", name:"身體照顧困難加計", cat:"加計", unit:"每日 1 次", price:"200 / 240", tags:[], kind:"aa",
+ scope:["對有管路（或傷口、燒燙傷），或移位困難且體重超過 70 公斤需協助之個案提供 BA01 或 BA07。","對 ADL 移位或上下樓梯屬完全依賴提供 BA12，或需 2 名以上照服員同時提供才能完成 BA12。","對 ADL 移位屬可自行坐起但離床需協助，且體重大於 70 公斤提供 BA12。","對 12 歲以下（含）個案提供 BA01、BA02 或 BA07。","以日為加計單位，每日一次為限。"],
+ must:["個案體重、管路、傷口狀況記錄在案，每次沐浴或擦澡時申報。","需兩人搬運上下樓的個案，紀錄兩位人員姓名。"],
+ never:["對非名單內碼別（如 BA02 成人）加計。","一天多筆 BA01 與 BA07 各加一次。"],
+ pitfalls:[["個案體重 68 公斤但移位很困難。","不符 70 公斤門檻；若有管路或傷口則符合第一款。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["搭配：[[BA01]]、[[BA07]]、[[BA12]]、[[BA02]]（12 歲以下）。"], sup:["這是最常漏報的加計，定期比對個案體重與管路清單。"]},
+
+{code:"AA07", name:"家庭照顧功能微弱之服務加計", cat:"加計", unit:"每月 1 次", price:"760 / 915", tags:[], kind:"aa",
+ scope:["對長照需要等級第 4 級以上，且家庭照顧者為年齡超過 75 歲、或領有身障證明、或獨居之個案，到宅提供 BA01、BA02、BA03、BA04、BA07、BA08、BA10、BA11、BA12 及 BA14 時加計。","以每月為加計單位，每月申請一次。"],
+ must:["核對長照等級與家庭照顧者資料（年齡、身障證明）或獨居認定。","當月有提供名單內任一碼別即可申請一次。"],
+ never:["等級 3 級以下申請。","當月只提供 BA15、BA16、BA20 等名單外碼別卻申請。"],
+ pitfalls:[["個案 5 級，太太 72 歲照顧。","家庭照顧者未超過 75 歲、無身障證明、非獨居，不符合。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["名單內碼別見上。"], sup:["每月結帳前跑一次符合條件清單。"]},
+
+{code:"AA08", name:"晚間服務", cat:"加計", unit:"每日 1 次", price:"385 / 465", tags:[], kind:"aa",
+ scope:["於晚上 8 點至晚上 12 點提供照顧及專業服務時加計。","同服務單位提供同個案服務，一日限加計一次。","同日 AA08 及 AA09 不得同時申請。"],
+ must:["服務時間落在 20:00～24:00 才可申報，紀錄起訖時間要精確。"],
+ never:["19:50 開始的服務為了加計拖到 20:00 才打卡。","與 [[AA09]] 同日同時申請。"],
+ pitfalls:[["週六晚上 9 點服務。","AA08 與 AA09 擇一（AA09 較高）。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["互斥：[[AA09]]。","[[BA22]] 非規定時段巡視經審核可加計。"], sup:["核對打卡時間。"]},
+
+{code:"AA09", name:"例假日服務", cat:"加計", unit:"每日 1 次", price:"770 / 925", tags:[], kind:"aa",
+ scope:["於週六、週日或國定假日提供照顧及專業服務、喘息服務時加計。","同服務單位提供同個案服務，一日限加計一次。","同日 AA08 及 AA09 不得同時申請。"],
+ must:["國定假日以政府公告為準（補假日算，調整上班日不算）。"],
+ never:["與 [[AA08]] 同日同時申請。","同一天服務兩次報兩次。"],
+ pitfalls:[["補班的週六。","調整上班日不是例假日，不得加計。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["互斥：[[AA08]]。","適用：[[GA09]] 居家喘息也可加計。"], sup:["年度行事曆對照。"]},
+
+{code:"AA10", name:"夜間緊急服務", cat:"加計", unit:"每日 1 次", price:"1,000 / 1,200", tags:[], kind:"aa",
+ scope:["於晚上 12 點至隔日 6 點緊急提供非照顧計畫既定之照顧服務加計。","一日為一給付單位。"],
+ must:["僅限緊急、非計畫既定的服務；事由要寫清楚（跌倒、腹瀉、管路脫落等）。","事後依第 21 條通知 A 個管並經照管中心確認。"],
+ never:["把固定排班的夜間服務報 AA10。"],
+ pitfalls:[["凌晨 2 點家屬叫居服員來換尿布。","若確為突發且非計畫既定，可提供臨時服務名單內碼別並加計 AA10。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["搭配臨時服務名單：[[BA01]]、[[BA24]] 等。"], sup:["要求附緊急事由紀錄。"]},
+
+{code:"AA11", name:"照顧服務員進階訓練", cat:"加計", unit:"每日 1 次", price:"50 / 60", tags:["train"], kind:"aa",
+ scope:["對領有身障證明之慢性精神病患者、自閉症者、智能障礙者、失智症者、頑性癲癇症者、植物人及罕見疾病患者；經確診之失智症者；領有身障證明且 ICD 註記腦性麻痺或脊髓損傷、重大傷病證明或診斷證明之腦性麻痺與脊髓損傷者，提供 BA01、BA02、BA04、BA05、BA07、BA13、BA18、BA20、BA23、BA24、BB01～BB14 及 BC01～BC14 時加計。","服務失智症者之照服員應完成失智症訓練課程；服務其他身心障礙者應取得身心障礙服務相關訓練證明。","以日為加計單位，每一位個案每日一次；居家式與社區式分別計算。","機構應訂定回饋完訓照服員之獎勵機制。"],
+ must:["訓練證明歸檔，派案時比對完訓人員。"],
+ never:["未完訓人員申報。","對 BA03、BA10、BA11、BA12、BA14、BA15、BA16 等名單外碼別加計。"],
+ pitfalls:[["完訓的居服員服務失智個案做 BA15 家務。","BA15 不在名單內，不能加計。"]],
+ detail:["不扣額度、免部分負擔。"], rel:["名單內碼別見上。"], sup:["確認機構獎勵機制有書面。"]},
+
+{code:"GA09", name:"居家喘息服務", cat:"喘息", unit:"每 2 小時", price:"770 / 925", tags:[], kind:"ga",
+ scope:["家庭照顧者與服務單位議定，由照顧服務人員至案家提供身體照顧服務：協助如廁、沐浴、穿換衣服、口腔清潔、進食、服藥、翻身、拍背、簡單被動式肢體關節活動、上下床、陪同運動、協助使用日常生活輔助器具及其他服務；如有陪同就醫需求可加計 BA14。","陪同運動在安全情況下得至居家以外之地點，如自家庭院、社區中庭、附近公園散步運動。","以 2 小時為一給付單位，單日以 10 小時為上限。","使用喘息服務額度，與 BA 碼的照顧及專業服務額度是不同包。"],
+ must:["服務前與家屬議定內容並記錄。","時數以 2 小時為單位計算，整段在案家（或陪同運動地點）。","例假日可加計 [[AA09]]；符合條件可加計 [[AA05]]。"],
+ never:["喘息時段內另拆 BA 碼申報（BA14 陪同就醫除外）。","單日超過 10 小時。","陪同就醫、辦事等以喘息名義外出（就醫需加計 BA14）。"],
+ pitfalls:[["家屬只需要 1 小時。","最小單位 2 小時。"],["額度用完想改用喘息額度補週日。","可以，兩包額度分開，內容幾乎相同；但 BA 碼與 GA09 不得同一時段重疊。"]],
+ detail:["115 年修正放寬陪同運動地點。"], rel:["加計：[[BA14]]、[[AA09]]、[[AA05]]。"], sup:["核對喘息額度餘額與 BA 額度餘額，避免家屬誤解。"]}
+];
+
+const FAQ = [
+["個案在浴室洗澡，順便床上擦一擦沒洗到的地方，可以報 BA07 加 BA01 嗎？","不行。同一時段 BA07 與 BA01 互斥，浴間整套就是 BA07 一組合，BA07 本身已包含 BA01 與 BA23 的內容。"],
+["家屬要求居服員每天量血壓，計畫沒有 BA03。","不能自行申報。回報 A 個管評估是否有「因疾病需要」核定 BA03；沐浴前的血壓確認是服務前觀察，本來就不能報。"],
+["陪同就醫從出門到回家 3 小時。","BA14 一次（涵蓋出門起 1.5 小時），超過的時間依實際時數用 BA13，並通知 A 個管、經照管中心確認。"],
+["洗腎個案每週三次陪同去透析。","用 BA13 陪同外出（定期式復健或透析治療是 BA13 的目的之一），不是 BA14。"],
+["個案與兒子同住，兒子上班，個案白天一個人，算獨居嗎？","不算。獨居的定義是同住家人「每一位」都符合未滿 18 歲、18～64 歲領身障證明或長照 2～8 級、65 歲以上、確診失智之一。"],
+["非獨居個案，居服員拖了客廳。","客廳是共用區域，BA15 只支付 50%，另 50% 個案自付；服務前要讓家屬知道並簽契約。"],
+["買菜回來煮飯，報一個碼？","兩個碼：採買 BA16、備餐 BA05，各自要有核定。"],
+["幫個案熱便當並餵食。","BA04 一餐一組合；備餐才是 BA05。"],
+["管灌個案，一天三次灌食加翻身拍背。","BA04 三組合（一餐一組合）、BA10 依核定次數；順序是先翻身拍背再灌食，灌後不可立即拍背。"],
+["居服員可以幫個案剪指甲嗎？","一般修剪屬 BA02。糖尿病個案且符合問題清單與足部狀況條件、由完訓人員執行的才是 BA08。"],
+["個案突然腹瀉弄髒，今天沒排清潔。","BA01 可依第 21 條臨時提供，做完立即通知 A 個管，經照管中心確認後申報；BA02、BA15 不在名單內，不能臨時報。"],
+["陪伴 2 小時期間順手整理床鋪與換尿布。","BA20 不得與其他組合併用。要嘛整段報 BA20，要嘛把整理床鋪換尿布另排一個接續時段報 BA02。"],
+["失智個案抗拒洗澡打了居服員。","記錄事件、不強迫、調整策略；此個案符合 AA05 照顧困難加計（曾有抗拒或攻擊行為），每日一次。"],
+["個案 80 公斤臥床有鼻胃管，每次擦澡。","BA01 每次都可加計 AA06（有管路或體重逾 70 公斤且移位困難），每日一次。"],
+["週六晚上 9 點服務要報哪個加計？","AA08 與 AA09 擇一，通常選 AA09（770）。"],
+["個案聘有外籍看護，可以用居服嗎？","照顧及專業服務額度僅給付 30%；到宅沐浴車 BA09、BA09a 不受第 10 條第 2 項限制但仍以 30% 額度計。細節以照管中心核定為準。"],
+["額度用完了家屬還想用服務。","屬自費項目，收費須依機構向主管機關核定之標準，不可私下議價；也可評估改用喘息額度（GA09）。"],
+["巡視個案時發現跌倒。","先確保安全、通知家屬與必要時 119；巡視 BA22 不得搭配其他碼，但突發需求可提供臨時服務名單內碼別（如 BA01），事後通知 A 個管、經照管中心確認。"]
+];
+
+/* ---------- 渲染 ---------- */
+const ALLCATS = ["清潔沐浴","日常照顧","餐食","身體照顧","外出移動","家務代購","醫療相關","陪伴看視","加計","喘息"];
+const TAGNAME = {train:"需完成認可訓練", temp:"可臨時先做後補", solo:"不得與其他組合併用"};
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const link = s => esc(s).replace(/\[\[([A-Z]{2}\d{2}[a-z0-9]*)\]\]/g,(m,c)=>{
+  const exists = DATA.some(d=>d.code===c);
+  return exists ? `<a class="codelink" href="#code-${c}" data-jump="${c}">${c}</a>` : `<b>${c}</b>`;
+});
+const li = arr => arr.map(x=>`<li>${link(x)}</li>`).join("");
+
+function cardHTML(d){
+  const kind = d.kind==="aa"?" aa":d.kind==="ga"?" ga":"";
+  const m = d.code.match(/^([A-Z]{2}\d{2})([a-z0-9]*)$/);
+  const codeLabel = m && m[2] ? `${m[1]}<small>${m[2]}</small>` : d.code;
+  const tags = (d.tags||[]).map(t=>`<span class="tag ${t}">${TAGNAME[t]}</span>`).join("");
+  const pits = (d.pitfalls||[]).map(p=>`<div class="pit-item"><b>${link(p[0])}</b><span class="fix">${link(p[1])}</span></div>`).join("");
+  const searchText = [d.code,d.name,d.cat,...d.scope,...d.must,...d.never,...(d.pitfalls||[]).flat(),...d.detail,...d.rel,...(d.sup||[])].join(" ").toLowerCase();
+  return `<article class="card" id="code-${d.code}" data-cat="${d.cat}" data-search="${esc(searchText)}">
+    <button class="card-head" type="button" aria-expanded="false" aria-controls="body-${d.code}">
+      <div class="code${kind}">${codeLabel}</div>
+      <div class="card-title">
+        <h3>${esc(d.name)}</h3>
+        <div class="meta"><span>單位 <b>${esc(d.unit)}</b></span><span>價格 <b>${esc(d.price)}</b> 元</span><span>${esc(d.cat)}</span></div>
+        ${tags?`<div class="tags">${tags}</div>`:""}
+      </div>
+      <div class="caret" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+    </button>
+    <div class="card-body" id="body-${d.code}">
+      <div class="part scope"><h4>服務範圍與附表規定</h4><ul>${li(d.scope)}</ul></div>
+      <div class="part must"><h4>一定要做</h4><ul>${li(d.must)}</ul></div>
+      <div class="part never"><h4>絕對不要</h4><ul>${li(d.never)}</ul></div>
+      ${pits?`<div class="part pit"><h4>常見誤區</h4>${pits}</div>`:""}
+      <div class="part detail"><h4>執行細節</h4><ul>${li(d.detail)}</ul></div>
+      <div class="part rel"><h4>互斥與搭配</h4><ul>${li(d.rel)}</ul></div>
+      ${d.sup&&d.sup.length?`<div class="part sup"><h4>督導檢核</h4><ul>${li(d.sup)}</ul></div>`:""}
+    </div>
+  </article>`;
+}
+
+function render(){
+  const ba = DATA.filter(d=>!d.kind), aa = DATA.filter(d=>d.kind==="aa"), ga = DATA.filter(d=>d.kind==="ga");
+  document.getElementById("cards-ba").innerHTML = ba.map(cardHTML).join("");
+  document.getElementById("cards-aa").innerHTML = aa.map(cardHTML).join("");
+  document.getElementById("cards-ga").innerHTML = ga.map(cardHTML).join("");
+  document.getElementById("faq").innerHTML = FAQ.map(f=>`<details><summary>${esc(f[0])}</summary><div class="a"><div>${esc(f[1])}</div></div></details>`).join("");
+  const nav = document.getElementById("sidenav");
+  const navGroup = (title, arr) => `<h2>${title}</h2>` + arr.map(d=>`<a href="#code-${d.code}" data-jump="${d.code}"><b>${d.code}</b><span>${esc(d.name)}</span></a>`).join("");
+  nav.innerHTML = `<h2>總覽</h2><a href="#sec-rules"><span>通則</span></a><a href="#sec-quick"><span>互斥與臨時服務速查</span></a><a href="#sec-faq"><span>情境快問</span></a><a href="#sec-appendix"><span>附錄</span></a>` + navGroup("照顧服務 BA", ba) + navGroup("加計 AA", aa) + navGroup("喘息 GA", ga);
+  const chips = document.getElementById("chips");
+  chips.innerHTML = `<button class="chip" type="button" data-cat="" aria-pressed="true">全部</button>` + ALLCATS.map(c=>`<button class="chip" type="button" data-cat="${c}" aria-pressed="false">${c}</button>`).join("");
+}
+
+let activeCat = "";
+function setOpen(card, open){
+  if(open) card.setAttribute("open",""); else card.removeAttribute("open");
+  card.querySelector(".card-head").setAttribute("aria-expanded", open?"true":"false");
+}
+function applyFilter(){
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const terms = q.split(/\s+/).filter(Boolean);
+  let shown = 0;
+  document.querySelectorAll(".card").forEach(card=>{
+    const text = card.dataset.search;
+    const catOk = !activeCat || card.dataset.cat===activeCat;
+    const qOk = terms.every(t=>text.includes(t));
+    const show = catOk && qOk;
+    card.style.display = show ? "" : "none";
+    card.classList.toggle("hit", show && terms.length>0);
+    if(show) shown++;
+    if(terms.length>0 && show) setOpen(card, true);
+  });
+  document.getElementById("count").textContent = terms.length||activeCat ? `顯示 ${shown} 個碼別` : `共 ${DATA.length} 個碼別`;
+  document.getElementById("empty").classList.toggle("show", shown===0);
+  const hideSections = terms.length>0;
+  ["sec-rules","sec-quick","sec-faq","sec-appendix"].forEach(id=>{ document.getElementById(id).style.display = hideSections ? "none" : ""; });
+}
+function jumpTo(code){
+  document.getElementById("q").value = ""; activeCat = "";
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.cat===""?"true":"false"));
+  applyFilter();
+  const card = document.getElementById("code-"+code);
+  if(!card) return;
+  setOpen(card, true);
+  card.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+render();
+applyFilter();
+
+document.addEventListener("click", e=>{
+  const head = e.target.closest(".card-head");
+  if(head){ const card = head.closest(".card"); setOpen(card, !card.hasAttribute("open")); return; }
+  const jump = e.target.closest("[data-jump]");
+  if(jump){ e.preventDefault(); jumpTo(jump.dataset.jump); history.replaceState(null,"","#code-"+jump.dataset.jump); return; }
+  const chip = e.target.closest(".chip");
+  if(chip){ activeCat = chip.dataset.cat; document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c===chip?"true":"false")); applyFilter(); return; }
+});
+document.getElementById("q").addEventListener("input", applyFilter);
+document.getElementById("clearBtn").addEventListener("click", ()=>{ document.getElementById("q").value=""; applyFilter(); document.getElementById("q").focus(); });
+document.getElementById("supToggle").addEventListener("click", e=>{
+  const on = e.currentTarget.getAttribute("aria-pressed")!=="true";
+  e.currentTarget.setAttribute("aria-pressed", on?"true":"false");
+  document.body.classList.toggle("hidden-sup", !on);
+});
+document.body.classList.add("hidden-sup");
+document.getElementById("expandAll").addEventListener("click", e=>{
+  const on = e.currentTarget.getAttribute("aria-pressed")!=="true";
+  e.currentTarget.setAttribute("aria-pressed", on?"true":"false");
+  document.querySelectorAll(".card").forEach(c=>setOpen(c,on));
+});
+const topBtn = document.getElementById("topBtn");
+window.addEventListener("scroll", ()=>topBtn.classList.toggle("show", window.scrollY>600), {passive:true});
+topBtn.addEventListener("click", ()=>window.scrollTo({top:0, behavior:"smooth"}));
+if(location.hash.startsWith("#code-")){ const c = location.hash.slice(6); setTimeout(()=>jumpTo(c), 50); }
+</script>
+</body>
+</html>
