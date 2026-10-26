@@ -341,6 +341,39 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
   .ritem{padding:10px 12px 8px}
   .hints{flex-wrap:wrap}
 }
+
+/* ---- v4：重點優先卡片 ---- */
+.ritem .ttl{cursor:pointer}
+.ritem .ttl:hover{color:var(--teal-deep)}
+.ritem .gist{display:flex;gap:8px;align-items:flex-start;background:var(--amber-soft);border-radius:10px;padding:8px 12px;margin:6px 0 6px;font-size:15.5px;line-height:1.7}
+.ritem .gist b{flex:0 0 auto;font-size:12.5px;color:#fff;background:#C27C0E;border-radius:6px;padding:1px 7px;margin-top:3px}
+.snipbox{background:#FFFBEF;border:1px solid #F2DFAE;border-radius:10px;padding:6px 12px;margin:4px 0 6px;font-size:14.5px;line-height:1.7}
+.snipbox b{font-size:12px;color:#8A5300}
+.snipbox p{margin:2px 0}
+.ritem.open .fulltext{max-height:none}
+.ritem .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.ritem .act .expand{display:inline-block;padding:3px 2px}
+.ext.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.ext.primary:hover{background:var(--teal-deep)}
+.warn{font-size:12.5px;color:#B23A17}
+.nofull{font-size:13.5px;color:var(--muted)}
+.tools{margin-left:auto;display:inline-flex;gap:6px}
+.tbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:2px 10px;font-size:13px;color:var(--muted)}
+.tbtn:hover{border-color:var(--teal);color:var(--teal-deep)}
+.star{margin-left:auto;border:none;background:none;font-size:20px;line-height:1;color:#A9B7B9;padding:0 2px}
+.star.on{color:#E8A317}
+.star:hover{color:#E8A317}
+.ritem .top .cat{margin-right:0}
+.alsos{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+.also.plain{font-weight:700}
+.favbtn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;font-size:14px;color:var(--ink)}
+.favbtn .n{font-size:12.5px;color:var(--muted)}
+.favbtn[aria-pressed="true"]{background:#FFF3D6;border-color:#E8A317;color:#7A4A00}
+.share::before{content:none}
+@media (max-width:700px){
+  .tools{margin-left:0;width:100%}
+  .ritem .gist{font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -514,7 +547,7 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 <header class="masthead hub-head">
   <div class="wrap">
     <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>長照相關函釋查詢</h1>
-    <p>衛生福利部與全台 22 縣市的長照函釋全文，依發文日期由新到舊。輸入碼別或關鍵字就能找到，要核對公文正本再點「看原文 ↗」。</p>
+    <p>衛生福利部與全台 22 縣市的長照函釋，每則都有一句話重點、全文與原文出處（可下載公文），依發文日期由新到舊。</p>
     <div class="legend">
       <span><i style="background:var(--teal)"></i>中央（衛生福利部）</span>
       <span><i style="background:var(--amber)"></i>縣市自己的規定</span>
@@ -526,7 +559,7 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 <div class="toolbar hub-tools">
   <div class="wrap">
     <div class="search">
-      <input id="hq" type="search" placeholder="輸入碼別、關鍵字或文號，例如：BA13、日照 交通車、剩餘額度" aria-label="搜尋函釋全文" autocomplete="off" enterkeyhint="search">
+      <input id="hq" type="search" placeholder="輸入碼別、關鍵字或文號，例如：BA13、日照 交通車、剩餘額度（按 / 快速搜尋）" aria-label="搜尋函釋全文" autocomplete="off" enterkeyhint="search">
       <button class="clear" id="hClear" type="button" aria-label="清除搜尋">清除</button>
       <button class="filtbtn" id="hFilt" type="button" aria-expanded="false">篩選<span class="b" id="hFiltN" hidden></span></button>
     </div>
@@ -537,7 +570,8 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
         <select id="hSrc" aria-label="來源"></select>
         <select id="hPeriod" aria-label="發文期間"></select>
         <select id="hSort" aria-label="排序"><option value="new">最新的在前</option><option value="old">最舊的在前</option></select>
-        <button class="toggle" id="hFull" type="button" aria-pressed="false"><span class="knob"></span>全部展開</button>
+        <button class="favbtn" id="hFav" type="button" aria-pressed="false">★ 我的收藏 <span class="n">0</span></button>
+        <button class="toggle" id="hFull" type="button" aria-pressed="false"><span class="knob"></span>全部展開全文</button>
       </div>
     </div>
     <div class="activebar" id="hActive" aria-live="polite"></div>
@@ -576,8 +610,8 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
     <div class="steps">
       <div><b>直接搜尋</b>：輸入碼別（BA13）、服務名稱（日照）或文號，會比對每則函釋的全文；常用說法（日照／日間照顧、外看／外籍看護）會一起找。</div>
       <div><b>縮小範圍</b>：用類別、來源（中央或某縣市）與期間篩選；條件會顯示在搜尋框下方，點 × 可以拿掉。</div>
-      <div><b>分享給同事</b>：每則右上角「複製連結」，對方點開就直接看到這一則；搜尋結果的網址也可以直接分享。</div>
-      <div><b>引用前核對</b>：寫紀錄或回覆申訴時，寫明文號與日期，並點「看原文」下載公文存檔。</div>
+      <div><b>收藏與分享</b>：點卡片右上角 ☆ 收進「我的收藏」（存在這台裝置）；「分享連結」可以傳給同事，對方點開就直接看到這一則。</div>
+      <div><b>引用與存檔</b>：「複製引用」會複製「衛生福利部○年○月○日衛部顧字第○號函」格式，可直接貼進紀錄；再點「原文出處／下載原文」把公文存檔。</div>
     </div>
     <p class="note" id="hNote" style="margin-top:14px"></p>
   </section>
@@ -1236,23 +1270,31 @@ const days = n => n ? Math.floor(n/10000)*372 + Math.floor(n/100%100)*31 + n%100
 const safeUrl = u => /^https?:\/\//.test(u||"") ? esc(u) : "";
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
 let HUB = {sources:[],counties:[],items:[],note:""}, HITEMS = [], hubReady = false, hubLoading = null, LATEST = 0;
-const H = {q:"", cat:"", src:"", period:"", sort:"new"};
+const H = {q:"", cat:"", src:"", period:"", sort:"new", fav:false};
 let hShown = 20, hAllOpen = false, hTerms = [], hGroups = [];
 const openSet = new Set();
 
 /* 手冊內的函釋精選：同文號就掛上「手冊有詳解」，手冊獨有的補進清單 */
+/* 手冊裡沒有文號的兩則，補上原始出處 */
+const MANUAL_SRC = {
+  "臺東縣衛生局「長照支付碼別疑問及回應」": "https://ttshbltc.ttshb.gov.tw/ttshb/file/unit/85/%E8%87%BA%E6%9D%B1%E7%B8%A3%E9%95%B7%E7%85%A7%E6%94%AF%E4%BB%98%E7%A2%BC%E5%88%A5%E7%96%91%E5%95%8F%E5%8F%8A%E5%9B%9E%E6%87%89.pdf",
+  "衛福部長照專區問答（給付及支付基準舊版問答）": "https://1966.gov.tw/LTC/np-6450-207.html"
+};
 function mergeManual(items){
   const byNo = new Map(items.filter(i=>i.no).map(i=>[normNo(i.no), i]));
   REFS.forEach((r,idx)=>{
+    const src = MANUAL_SRC[r.no];
+    const byUrl = src && items.find(i=>i.url===src);
+    if(byUrl){ byUrl.manual = idx; if(!byUrl.gist) byUrl.gist = r.gist[0]; return; }
     const m = byNo.get(normNo(r.no));
     if(m){ m.manual = idx; if(!m.gist) m.gist = r.gist[0]; return; }
     const local = !/^衛生福利部/.test(r.org);
-    items.push({no:r.no, date:r.date, org:r.org, title:r.title, subject:"", text:r.gist.join("\n"), laws:"", category:/GA/.test(r.codes.join())?"喘息服務":"居家服務",
-      gist:"", url:"", manual:idx, level: local?"local":"central", county: local ? (REGIONS.flatMap(x=>x[1]).find(c=>r.org.startsWith(c.slice(0,2)))||"") : "", also:[], fromManual:true});
+    items.push({no:r.no, date:r.date, org:r.org, title:r.title, subject:"", text:r.gist.concat(r.rule||[]).join("\n"), laws:"", category:/GA/.test(r.codes.join())?"喘息服務":"居家服務",
+      gist:r.gist[0], url:src||"", manual:idx, level: local?"local":"central", county: local ? (REGIONS.flatMap(x=>x[1]).find(c=>r.org.startsWith(c.slice(0,2)))||"") : "", also:[], fromManual:true});
   });
   items.forEach((i,n)=>{
     i.manual ??= null; i.also ??= [];
-    i.key = normNo(i.no).replace(/\D/g,"") || ("x"+n);
+    i.key = normNo(i.no).replace(/\D/g,"") || ("t" + [...(i.title+i.date)].reduce((h,c)=>(h*31 + c.charCodeAt(0))>>>0, 7).toString(36));
     i._s = [i.no,i.date,i.org,i.title,i.subject,i.text,i.gist,i.laws,i.category,i.county,...i.also.map(a=>a.county)].join(" ").toLowerCase();
     i._d = dnum(i.date);
     /* 標題就是主旨縮寫時，不再重複顯示主旨 */
@@ -1319,40 +1361,76 @@ function snippetParas(i){
   const hit = ps.filter(p=>hTerms.some(t=>p.toLowerCase().includes(t)));
   return hit.length ? hit.slice(0,3) : ps;
 }
+/* 原文連結：依網址判斷是下載檔還是網頁，並標出來源機關 */
+function linkInfo(u, fallbackOrg){
+  let host = ""; try{ host = new URL(u).hostname; }catch(e){}
+  const dl = /\.(pdf|docx?|odt|xlsx?|zip|7z|tiff?)(\?|$)/i.test(u) || /download|Download\.ashx|\/upload|dl-\d|\/files?\//i.test(u);
+  const org = /mohwlaw/.test(host) ? "衛福部法規檢索" : /1966\.gov/.test(host) ? "衛福部長照專區" : /mohw\.gov/.test(host) ? "衛福部" : (fallbackOrg||"");
+  return {dl, org};
+}
+function citeOf(i){
+  const m = (i.date||"").match(/^(\d{2,3})\.(\d{1,2})\.(\d{1,2})$/);
+  const d = m ? `${m[1]}年${m[2]}月${m[3]}日` : "";
+  const kind = /令/.test(i.no+i.title) && !/函/.test(i.no) ? "令" : /公告/.test(i.title) ? "公告" : "函";
+  const org = i.level==="central" ? "衛生福利部" : (i.org||i.county);
+  return i.no ? `${org}${d}${i.no.replace(/^以/,"")}${kind}` : `${org}${d}「${i.title}」`;
+}
+const FAV_KEY = "hubFav";
+let FAV = new Set(); try{ FAV = new Set(JSON.parse(localStorage.getItem(FAV_KEY)||"[]")); }catch(e){}
+function saveFav(){ try{ localStorage.setItem(FAV_KEY, JSON.stringify([...FAV])); }catch(e){} updateFavBtn(); }
+function updateFavBtn(){ const b = document.getElementById("hFav"); if(b){ b.querySelector(".n").textContent = FAV.size; b.setAttribute("aria-pressed", H.fav?"true":"false"); } }
+
 function itemHTML(i){
-  const u = safeUrl(i.url);
   const open = hAllOpen || openSet.has(i.key);
-  const also = i.also.map(a=>{ const au = safeUrl(a.url); return au ? `<a class="also" href="${au}" target="_blank" rel="noopener" title="看${esc(a.county)}公告的版本">${esc(a.county)}</a>` : `<span class="also">${esc(a.county)}</span>`; }).join("");
   const isNew = LATEST && i._d && days(LATEST) - days(i._d) <= 30;
-  const ps = open ? (i.text||"").split(/\n+/).filter(Boolean) : snippetParas(i);
-  const snippet = !open && hTerms.length && ps.length < (i.text||"").split(/\n+/).filter(Boolean).length;
-  const long = (i.text||"").length > 260 || (i.showSubj && (i.subject||"").length > 120);
-  const hasFull = i.subject || i.text;
-  const body = hasFull ? `<div class="fulltext${open||!long?"":" clamp"}${snippet?" snip":""}">
-      ${i.showSubj?`<div class="subj"><b>主旨</b>${hl(i.subject)}</div>`:""}
-      ${i.text?`<div class="expl">${snippet?`<b>符合段落</b>`:(i.showSubj||i.fromManual?`<b>${i.fromManual?"要旨":"說明"}</b>`:"")}${ps.map(p=>`<p>${hl(p)}</p>`).join("")}</div>`:""}
-      ${open&&i.laws?`<div class="laws"><b>相關法條</b>${hl(i.laws)}</div>`:""}
-      ${open&&i.ocr?`<div class="laws">原文為掃描檔，內容由文字辨識（OCR）轉出，可能有個別錯字，引用前請點「看原文」核對。</div>`:""}
-    </div>${long||snippet?`<button type="button" class="expand" data-expand="${i.key}" aria-expanded="${open}">${open?"收合 ▴":(snippet?"看完整全文 ▾":"展開全文 ▾")}</button>`:""}`
-    : `<div class="fulltext nofull">${i.scanned?"原文為掃描檔，請點「看原文」閱讀。":"這一則網站只提供附件，請點「看原文」閱讀全文。"}</div>`;
-  return `<article class="ritem${i.level==="local"?" local":""}" id="r-${i.key}">
+  const hasFull = !!(i.subject || i.text);
+  const paras = (i.text||"").split(/\n+/).filter(Boolean);
+  /* 搜尋時：關鍵字不在標題／重點裡，就把命中的段落秀出來 */
+  let snip = "";
+  if(!open && hTerms.length){
+    const head = (i.title+" "+(i.gist||"")+" "+(i.no||"")).toLowerCase();
+    if(!hTerms.some(t=>head.includes(t))){
+      const hit = paras.filter(p=>hTerms.some(t=>p.toLowerCase().includes(t))).slice(0,2);
+      if(!hit.length && i.subject && hTerms.some(t=>i.subject.toLowerCase().includes(t))) hit.push(i.subject);
+      if(hit.length) snip = `<div class="snipbox"><b>符合段落</b>${hit.map(p=>`<p>${hl(p.length>220?p.slice(0,220)+"…":p)}</p>`).join("")}</div>`;
+    }
+  }
+  const full = open && hasFull ? `<div class="fulltext">
+      ${i.subject?`<div class="subj"><b>主旨</b>${hl(i.subject)}</div>`:""}
+      ${i.text?`<div class="expl"><b>${i.fromManual?"要旨":"說明"}</b>${paras.map(p=>`<p>${hl(p)}</p>`).join("")}</div>`:""}
+      ${i.laws?`<div class="laws"><b>相關法條</b>${hl(i.laws)}</div>`:""}
+      ${i.ocr?`<div class="laws">原文為掃描檔，內容由文字辨識（OCR）轉出，可能有個別錯字，引用前請點下方原文核對。</div>`:""}
+    </div>` : "";
+  /* 原文與下載 */
+  const links = [];
+  if(i.url){ const li = linkInfo(i.url, i.level==="local" ? i.county : (i.also[0]?.county||"")); links.push(`<a class="ext primary" href="${safeUrl(i.url)}" target="_blank" rel="noopener">${li.dl?"下載原文":"原文出處"}${li.org?`（${esc(li.org)}）`:""}</a>${i.broken?`<span class="warn">連結可能已失效</span>`:""}`); }
+  else if(/\d{9,}/.test(i.no||"")) links.push(`<a class="ext primary" href="https://mohwlaw.mohw.gov.tw/FINT/FINTQRY04.aspx?starDate=19000101&endDate=20991231&no=&n1=&n2=${i.no.match(/\d{9,}/)[0]}&kt=&kw=&kw2=&kw3=&kw4=&valid=&type=etype_&RowNo=1" target="_blank" rel="noopener">原文出處（衛福部法規檢索）</a>`);
+  const also = i.also.filter(a=>a.url && a.url!==i.url).map(a=>`<a class="also" href="${safeUrl(a.url)}" target="_blank" rel="noopener" title="開啟${esc(a.county)}公告的版本">${esc(a.county)} ↗</a>`).join("");
+  const alsoNoLink = i.also.filter(a=>!a.url || a.url===i.url).map(a=>`<span class="also plain">${esc(a.county)}</span>`).join("");
+  return `<article class="ritem${i.level==="local"?" local":""}${open?" open":""}" id="r-${i.key}">
     <div class="top">
       <span class="lv${i.level==="local"?" local":""}">${i.level==="local"?esc(i.county||"縣市"):"中央"}</span>
       ${isNew?`<span class="new">新</span>`:""}
       <span class="date">${esc(i.date||"日期不詳")}${i.date_kind==="posted"?"（上架日）":""}</span>
       <span class="cat">${esc(i.category)}</span>
-      <button type="button" class="share" data-share="${i.key}" title="複製這一則的連結">複製連結</button>
+      <button type="button" class="star${FAV.has(i.key)?" on":""}" data-fav="${i.key}" aria-pressed="${FAV.has(i.key)}" title="${FAV.has(i.key)?"取消收藏":"加入我的收藏"}">${FAV.has(i.key)?"★":"☆"}</button>
     </div>
-    <h3>${hl(i.title)}</h3>
-    ${i.no?`<div class="no">${hl(i.no)}<button type="button" class="copyno" data-copy="${esc(i.no)}" title="複製文號">複製</button></div>`:""}
-    ${i.gist?`<p class="gist"><b>重點</b>${hl(i.gist)}</p>`:""}
-    ${body}
+    <h3 data-expand="${i.key}" class="ttl">${hl(i.title)}</h3>
+    ${i.no?`<div class="no">${hl(i.no)}</div>`:""}
+    ${i.gist?`<div class="gist"><b>重點</b><span>${hl(i.gist)}</span></div>`:""}
+    ${snip}
+    ${full}
     <div class="act">
-      ${u?`<a class="ext" href="${u}" target="_blank" rel="noopener">${i.src==="縣市轉知"&&i.also[0]?`看原文（${esc(i.also[0].county)}版）`:"看原文"}</a>`:""}
+      ${hasFull?`<button type="button" class="expand" data-expand="${i.key}" aria-expanded="${open}">${open?"收合全文 ▴":"看全文 ▾"}</button>`:`<span class="nofull">${i.scanned?"原文為掃描檔，請看原文":"全文在附件，請看原文"}</span>`}
+      ${links.join("")}
       ${i.manual!==null?`<a class="ext int" href="#ref-${i.manual}" data-ref="${i.manual}">手冊有詳解</a>`:""}
-      ${also?`<span class="alsos">已轉知：${also}</span>`:""}
+      <span class="tools">
+        <button type="button" class="tbtn" data-cite="${i.key}" title="複製可貼在紀錄或公文的引用文字">複製引用</button>
+        <button type="button" class="tbtn" data-share="${i.key}" title="複製這一則的連結">分享連結</button>
+      </span>
     </div>
-    <div class="srcnote">發文：${esc(i.org)}${i.src==="縣市轉知"?"・衛福部法規檢索系統未收錄此函，內容取自縣市轉知的公文":""}</div>
+    ${also||alsoNoLink?`<div class="alsos"><span>各縣市公告版本：</span>${also}${alsoNoLink}</div>`:""}
+    <div class="srcnote">發文：${esc(i.org)}${i.src==="縣市轉知"?"・衛福部法規檢索系統尚未收錄，內容取自縣市轉知的公文":""}</div>
   </article>`;
 }
 
@@ -1363,6 +1441,7 @@ function hubFilter(keepShown){
   hGroups = termGroups(H.q); hTerms = hGroups.flat();
   const p = H.period, now = days(LATEST);
   const pass = i=>{
+    if(H.fav && !FAV.has(i.key)) return false;
     if(H.src==="central" && i.level!=="central") return false;
     if(H.src==="local" && i.level!=="local") return false;
     if(H.src && H.src!=="central" && H.src!=="local" && i.county!==H.src && !i.also.some(a=>a.county===H.src)) return false;
@@ -1388,10 +1467,11 @@ function hubFilter(keepShown){
   more.textContent = `再顯示 20 則（還有 ${list.length-hShown} 則）`;
   const empty = document.getElementById("hEmpty");
   empty.classList.toggle("show", list.length===0);
-  if(!list.length) empty.innerHTML = `找不到符合的函釋。${H.q?`試試較短的關鍵字（例如只輸入「${esc(H.q.split(/\s+/)[0].slice(0,2))}」），`:""}或<button type="button" class="linkbtn" data-clearall>清除全部條件</button>。`;
+  if(!list.length && H.fav && !FAV.size) empty.innerHTML = `還沒有收藏。看到常用的函釋，點卡片右上角的 ☆ 就會收進「我的收藏」。<button type="button" class="linkbtn" data-clearall>回到全部函釋</button>`;
+  else if(!list.length) empty.innerHTML = `找不到符合的函釋。${H.q?`試試較短的關鍵字（例如只輸入「${esc(H.q.split(/\s+/)[0].slice(0,2))}」），`:""}或<button type="button" class="linkbtn" data-clearall>清除全部條件</button>。`;
   renderActive(list.length);
   syncHash();
-  const filtering = H.q||H.cat||H.src||H.period;
+  const filtering = H.q||H.cat||H.src||H.period||H.fav;
   document.getElementById("hHints").style.display = H.q ? "none" : "";
   document.getElementById("hub-central").style.display = filtering ? "none" : "";
   document.getElementById("hub-counties").style.display = filtering && !(REGIONS.some(r=>r[1].includes(H.src))) ? "none" : "";
@@ -1403,6 +1483,7 @@ function renderActive(n){
   const chips = [];
   const nf = [H.cat,H.src,H.period].filter(Boolean).length, b = document.getElementById("hFiltN");
   b.hidden = !nf; b.textContent = nf;
+  if(H.fav) chips.push(["fav","★ 我的收藏"]);
   if(H.q) chips.push(["q",`搜尋「${H.q}」`]);
   if(H.cat) chips.push(["cat",H.cat]);
   if(H.src) chips.push(["src", H.src==="central"?"只看中央":H.src==="local"?"只看縣市自己的規定":H.src]);
@@ -1412,14 +1493,14 @@ function renderActive(n){
     (chips.length>1?`<button type="button" class="linkbtn" data-clearall>清除全部</button>`:"");
 }
 function setCat(c){ H.cat = c; document.querySelectorAll("[data-hcat]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.hcat===c?"true":"false")); }
-function clearAll(){ document.getElementById("hq").value=""; setCat(""); H.src=""; H.period=""; document.getElementById("hSrc").value=""; document.getElementById("hPeriod").value=""; hubFilter(); }
+function clearAll(){ H.fav=false; updateFavBtn(); document.getElementById("hq").value=""; setCat(""); H.src=""; H.period=""; document.getElementById("hSrc").value=""; document.getElementById("hPeriod").value=""; hubFilter(); }
 
 /* 網址記住搜尋條件：#hub?q=BA13&cat=… 可以直接分享 */
 let syncing = false;
 function syncHash(){
   if(syncing || document.getElementById("view-hub").hidden) return;
   const p = new URLSearchParams();
-  if(H.q) p.set("q",H.q); if(H.cat) p.set("cat",H.cat); if(H.src) p.set("src",H.src); if(H.period) p.set("p",H.period); if(H.sort!=="new") p.set("sort",H.sort);
+  if(H.fav) p.set("fav","1"); if(H.q) p.set("q",H.q); if(H.cat) p.set("cat",H.cat); if(H.src) p.set("src",H.src); if(H.period) p.set("p",H.period); if(H.sort!=="new") p.set("sort",H.sort);
   const h = "#hub" + (p.toString() ? "?"+p.toString() : "");
   if(location.hash !== h) history.replaceState(null,"",h);
 }
@@ -1428,7 +1509,7 @@ function applyHashState(){
   const p = new URLSearchParams(m ? m[1] : "");
   syncing = true;
   document.getElementById("hq").value = p.get("q")||"";
-  setCat(p.get("cat")||""); H.src = p.get("src")||""; H.period = p.get("p")||""; H.sort = p.get("sort")||"new";
+  setCat(p.get("cat")||""); H.src = p.get("src")||""; H.period = p.get("p")||""; H.sort = p.get("sort")||"new"; H.fav = p.get("fav")==="1"; updateFavBtn();
   document.getElementById("hSrc").value = H.src; document.getElementById("hPeriod").value = H.period; document.getElementById("hSort").value = H.sort;
   const focus = p.get("id");
   if(focus){ openSet.add(focus); }
@@ -1507,6 +1588,10 @@ document.getElementById("hSrc").addEventListener("change", e=>{ H.src = e.target
 document.getElementById("hPeriod").addEventListener("change", e=>{ H.period = e.target.value; hubFilter(); });
 document.getElementById("hSort").addEventListener("change", e=>{ H.sort = e.target.value; hubFilter(); });
 document.getElementById("hFull").addEventListener("click", e=>{ hAllOpen = e.currentTarget.getAttribute("aria-pressed")!=="true"; e.currentTarget.setAttribute("aria-pressed", hAllOpen?"true":"false"); if(!hAllOpen) openSet.clear(); hubFilter(true); });
+document.getElementById("hFav").addEventListener("click", ()=>{ H.fav = !H.fav; updateFavBtn(); hubFilter(); });
+document.addEventListener("keydown", e=>{
+  if(e.key==="/" && curView==="hub" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); const q = document.getElementById("hq"); q.focus(); q.select(); }
+});
 document.getElementById("hFilt").addEventListener("click", e=>{ const t = document.querySelector(".hub-tools"); const o = !t.classList.contains("open"); t.classList.toggle("open", o); e.currentTarget.setAttribute("aria-expanded", o); });
 document.getElementById("hMore").addEventListener("click", ()=>{ hShown += 20; hubFilter(true); });
 const tools = document.querySelector(".hub-tools");
@@ -1525,7 +1610,7 @@ document.getElementById("view-hub").addEventListener("click", e=>{
   const hint = t.closest("[data-q]");
   if(hint){ document.getElementById("hq").value = hint.dataset.q; hubFilter(); return; }
   const un = t.closest("[data-unset]");
-  if(un){ const k = un.dataset.unset; if(k==="q") document.getElementById("hq").value=""; if(k==="cat") setCat(""); if(k==="src"){ H.src=""; document.getElementById("hSrc").value=""; } if(k==="period"){ H.period=""; document.getElementById("hPeriod").value=""; } hubFilter(); return; }
+  if(un){ const k = un.dataset.unset; if(k==="q") document.getElementById("hq").value=""; if(k==="cat") setCat(""); if(k==="src"){ H.src=""; document.getElementById("hSrc").value=""; } if(k==="period"){ H.period=""; document.getElementById("hPeriod").value=""; } if(k==="fav"){ H.fav=false; updateFavBtn(); } hubFilter(); return; }
   if(t.closest("[data-clearall]")){ clearAll(); return; }
   const ex = t.closest("[data-expand]");
   if(ex){
@@ -1539,10 +1624,12 @@ document.getElementById("view-hub").addEventListener("click", e=>{
     if(wasOpen){ const el = document.getElementById("r-"+k); if(el.getBoundingClientRect().top < 0) el.scrollIntoView({block:"start"}); }
     return;
   }
+  const fv = t.closest("[data-fav]");
+  if(fv){ const k = fv.dataset.fav; if(FAV.has(k)) FAV.delete(k); else FAV.add(k); saveFav(); const on = FAV.has(k); fv.classList.toggle("on", on); fv.textContent = on?"★":"☆"; fv.setAttribute("aria-pressed", on); toast(on?"已加入我的收藏":"已取消收藏"); if(H.fav && !on) hubFilter(true); return; }
+  const ct = t.closest("[data-cite]");
+  if(ct){ const it = HITEMS.find(x=>x.key===ct.dataset.cite); copy(citeOf(it), "已複製引用：" + citeOf(it)); return; }
   const sh = t.closest("[data-share]");
   if(sh){ const k = sh.dataset.share; copy(location.origin + location.pathname + "#hub?id=" + k + (/^\d+$/.test(k) ? "&q=" + k : ""), "已複製這一則的連結，可以貼給同事"); return; }
-  const cp = t.closest("[data-copy]");
-  if(cp){ copy(cp.dataset.copy, "已複製文號"); return; }
   const pick = t.closest("[data-pick]");
   if(pick){ H.src = pick.dataset.pick; document.getElementById("hSrc").value = H.src; hubFilter(); document.getElementById("hub-list").scrollIntoView({block:"start"}); return; }
   const go = t.closest("[data-goto]");
