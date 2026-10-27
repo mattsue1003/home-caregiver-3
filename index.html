@@ -374,6 +374,7 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
   .tools{margin-left:0;width:100%}
   .ritem .gist{font-size:15px}
 }
+.kindb{font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;background:#EDE7F6;color:#4A2F86}
 </style>
 </head>
 <body>
@@ -547,10 +548,10 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 <header class="masthead hub-head">
   <div class="wrap">
     <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>長照相關函釋查詢</h1>
-    <p>衛生福利部與全台 22 縣市的長照函釋，每則都有一句話重點、全文與原文出處（可下載公文），依發文日期由新到舊。</p>
+    <p>衛生福利部與全台 22 縣市的長照函釋、轉知與縣市自訂規定，每則都有一句話重點、全文與原文出處（可下載公文），依日期由新到舊。</p>
     <div class="legend">
       <span><i style="background:var(--teal)"></i>中央（衛生福利部）</span>
-      <span><i style="background:var(--amber)"></i>縣市自己的規定</span>
+      <span><i style="background:var(--amber)"></i>縣市（函釋轉知・自訂規定）</span>
       <span id="hStat"></span>
     </div>
   </div>
@@ -1294,8 +1295,8 @@ function mergeManual(items){
   });
   items.forEach((i,n)=>{
     i.manual ??= null; i.also ??= [];
-    i.key = normNo(i.no).replace(/\D/g,"") || ("t" + [...(i.title+i.date)].reduce((h,c)=>(h*31 + c.charCodeAt(0))>>>0, 7).toString(36));
-    i._s = [i.no,i.date,i.org,i.title,i.subject,i.text,i.gist,i.laws,i.category,i.county,...i.also.map(a=>a.county)].join(" ").toLowerCase();
+    i.key = i.k || normNo(i.no).replace(/\D/g,"") || ("t" + [...(i.title+i.date)].reduce((h,c)=>(h*31 + c.charCodeAt(0))>>>0, 7).toString(36));
+    i._s = [i.no,i.date,i.org,i.title,i.subject,i.text||"",i.gist,i.laws||"",i.category,i.county,i.kind||"",...i.also.map(a=>a.county)].join(" ").toLowerCase();
     i._d = dnum(i.date);
     /* 標題就是主旨縮寫時，不再重複顯示主旨 */
     const norm = x => (x||"").replace(/[「」『』（）()，,。、\s]/g,"").replace(/^(有關|關於)?(貴府|貴局|貴處|貴會|貴中心|貴單位|貴部|本部)?(衛生局|社會局)?(函詢|所詢|函請|函報|建議|反映|來函)?/,"");
@@ -1341,7 +1342,7 @@ function hubRender(){
       <header><h4>${name}</h4>${n?`<button type="button" class="pickbtn" data-pick="${name}">收錄 ${n} 則 →</button>`:`<span class="cnt">無公開函釋</span>`}</header>
       <ul>${c.sources.map(srcLi).join("")}</ul>${c.note?`<div class="cn">${esc(c.note)}</div>`:""}</article>`;
   }).join("")}</div></div>`).join("");
-  document.getElementById("hSrc").innerHTML = `<option value="">全部來源</option><option value="central">只看中央</option><option value="local">只看縣市自己的規定</option>` +
+  document.getElementById("hSrc").innerHTML = `<option value="">全部來源</option><option value="central">只看中央</option><option value="local">只看縣市發布的</option><option value="rule">只看縣市自訂規定（作業規範・審查・收費）</option>` +
     REGIONS.map(([rg,cs])=>`<optgroup label="${rg}縣市（含轉知）">${cs.map(c=>`<option value="${c}">${c}（${countyCount(c)}）</option>`).join("")}</optgroup>`).join("");
   const y = Math.floor(LATEST/10000);
   document.getElementById("hPeriod").innerHTML = `<option value="">全部期間</option><option value="m1">近 1 個月</option><option value="m3">近 3 個月</option><option value="m12">近 1 年</option>` +
@@ -1383,7 +1384,7 @@ function updateFavBtn(){ const b = document.getElementById("hFav"); if(b){ b.que
 function itemHTML(i){
   const open = hAllOpen || openSet.has(i.key);
   const isNew = LATEST && i._d && days(LATEST) - days(i._d) <= 30;
-  const hasFull = !!(i.subject || i.text);
+  const hasFull = !!(i.subject || i.text || i.sh!=null);
   const paras = (i.text||"").split(/\n+/).filter(Boolean);
   /* 搜尋時：關鍵字不在標題／重點裡，就把命中的段落秀出來 */
   let snip = "";
@@ -1395,7 +1396,7 @@ function itemHTML(i){
       if(hit.length) snip = `<div class="snipbox"><b>符合段落</b>${hit.map(p=>`<p>${hl(p.length>220?p.slice(0,220)+"…":p)}</p>`).join("")}</div>`;
     }
   }
-  const full = open && hasFull ? `<div class="fulltext">
+  const full = open && i.sh!=null && i.text==null ? `<div class="fulltext nofull">全文載入中…</div>` : open && hasFull ? `<div class="fulltext">
       ${i.subject?`<div class="subj"><b>主旨</b>${hl(i.subject)}</div>`:""}
       ${i.text?`<div class="expl"><b>${i.fromManual?"要旨":"說明"}</b>${paras.map(p=>`<p>${hl(p)}</p>`).join("")}</div>`:""}
       ${i.laws?`<div class="laws"><b>相關法條</b>${hl(i.laws)}</div>`:""}
@@ -1411,6 +1412,7 @@ function itemHTML(i){
     <div class="top">
       <span class="lv${i.level==="local"?" local":""}">${i.level==="local"?esc(i.county||"縣市"):"中央"}</span>
       ${isNew?`<span class="new">新</span>`:""}
+      ${i.kind==="縣市規定"?`<span class="kindb">縣市規定</span>`:""}
       <span class="date">${esc(i.date||"日期不詳")}${i.date_kind==="posted"?"（上架日）":""}</span>
       <span class="cat">${esc(i.category)}</span>
       <button type="button" class="star${FAV.has(i.key)?" on":""}" data-fav="${i.key}" aria-pressed="${FAV.has(i.key)}" title="${FAV.has(i.key)?"取消收藏":"加入我的收藏"}">${FAV.has(i.key)?"★":"☆"}</button>
@@ -1439,12 +1441,15 @@ function hubFilter(keepShown){
   if(!hubReady) return;
   H.q = document.getElementById("hq").value.trim();
   hGroups = termGroups(H.q); hTerms = hGroups.flat();
+  const textPending = !!H.q && !(ALLTEXT && ALLTEXT.done);
+  if(textPending) loadAllText().then(()=>hubFilter(true));
   const p = H.period, now = days(LATEST);
   const pass = i=>{
     if(H.fav && !FAV.has(i.key)) return false;
     if(H.src==="central" && i.level!=="central") return false;
     if(H.src==="local" && i.level!=="local") return false;
-    if(H.src && H.src!=="central" && H.src!=="local" && i.county!==H.src && !i.also.some(a=>a.county===H.src)) return false;
+    if(H.src==="rule" && i.kind!=="縣市規定") return false;
+    if(H.src && !["central","local","rule"].includes(H.src) && i.county!==H.src && !i.also.some(a=>a.county===H.src)) return false;
     if(p){
       const d = days(i._d);
       if(p==="m1" && !(i._d && now-d<=31)) return false;
@@ -1486,9 +1491,10 @@ function renderActive(n){
   if(H.fav) chips.push(["fav","★ 我的收藏"]);
   if(H.q) chips.push(["q",`搜尋「${H.q}」`]);
   if(H.cat) chips.push(["cat",H.cat]);
-  if(H.src) chips.push(["src", H.src==="central"?"只看中央":H.src==="local"?"只看縣市自己的規定":H.src]);
+  if(H.src) chips.push(["src", H.src==="central"?"只看中央":H.src==="local"?"只看縣市發布的":H.src==="rule"?"縣市自訂規定":H.src]);
   if(H.period) chips.push(["period", document.querySelector(`#hPeriod option[value="${H.period}"]`)?.textContent||H.period]);
-  document.getElementById("hActive").innerHTML = `<span class="cnt"><b>${n}</b> 則${chips.length?"符合":"，最新的在前"}</span>` +
+  const pend = H.q && !(ALLTEXT && ALLTEXT.done);
+  document.getElementById("hActive").innerHTML = `<span class="cnt"><b>${n}</b> 則${chips.length?"符合":"，最新的在前"}${pend?"（正在載入全文，內文符合的會陸續出現…）":""}</span>` +
     chips.map(([k,l])=>`<button type="button" class="fchip" data-unset="${k}" aria-label="移除條件：${esc(l)}">${esc(l)} <span aria-hidden="true">×</span></button>`).join("") +
     (chips.length>1?`<button type="button" class="linkbtn" data-clearall>清除全部</button>`:"");
 }
@@ -1516,6 +1522,7 @@ function applyHashState(){
   hubFilter();
   syncing = false;
   if(focus){
+    const fi = HITEMS.find(i=>i.key===focus); if(fi && !textReady(fi)) ensureText(fi).then(()=>hubFilter(true));
     const idx = lastList.findIndex(i=>i.key===focus);
     if(idx>=hShown){ hShown = idx+1; hubFilter(true); }
     setTimeout(()=>{ const el = document.getElementById("r-"+focus); if(el){ el.classList.add("flash"); el.scrollIntoView({block:"start"}); } }, 60);
@@ -1528,6 +1535,23 @@ function copy(text, msg){
   else prompt("請複製：", text);
 }
 
+/* 全文分 16 份，需要時才載入 */
+const SHARDS = {}; let ALLTEXT = null, BYKEY = null;
+function loadShard(n){
+  if(SHARDS[n]) return SHARDS[n];
+  SHARDS[n] = fetch(`data/t/${String(n).padStart(2,"0")}.json`).then(r=>r.json()).then(d=>{
+    BYKEY ??= new Map(HITEMS.map(i=>[i.key,i]));
+    for(const [k,v] of Object.entries(d)){ const i = BYKEY.get(k); if(!i) continue; i.text = v.text||""; i.laws = v.laws||""; i._s += " " + (i.text + " " + i.laws).toLowerCase(); }
+  });
+  return SHARDS[n];
+}
+function textReady(i){ return i.sh==null || i.text!=null; }
+function ensureText(i){ return textReady(i) ? Promise.resolve() : loadShard(i.sh); }
+function loadAllText(){
+  if(ALLTEXT) return ALLTEXT;
+  ALLTEXT = Promise.all(Array.from({length:16},(_,n)=>loadShard(n))).then(()=>{ ALLTEXT.done = true; });
+  return ALLTEXT;
+}
 function loadHub(){
   if(hubLoading) return hubLoading;
   hubLoading = fetch("data/hub.json").then(r=>r.json()).then(d=>{
@@ -1587,7 +1611,7 @@ document.getElementById("hClear").addEventListener("click", ()=>{ document.getEl
 document.getElementById("hSrc").addEventListener("change", e=>{ H.src = e.target.value; hubFilter(); });
 document.getElementById("hPeriod").addEventListener("change", e=>{ H.period = e.target.value; hubFilter(); });
 document.getElementById("hSort").addEventListener("change", e=>{ H.sort = e.target.value; hubFilter(); });
-document.getElementById("hFull").addEventListener("click", e=>{ hAllOpen = e.currentTarget.getAttribute("aria-pressed")!=="true"; e.currentTarget.setAttribute("aria-pressed", hAllOpen?"true":"false"); if(!hAllOpen) openSet.clear(); hubFilter(true); });
+document.getElementById("hFull").addEventListener("click", e=>{ hAllOpen = e.currentTarget.getAttribute("aria-pressed")!=="true"; e.currentTarget.setAttribute("aria-pressed", hAllOpen?"true":"false"); if(!hAllOpen) openSet.clear(); if(hAllOpen) loadAllText().then(()=>hubFilter(true)); hubFilter(true); });
 document.getElementById("hFav").addEventListener("click", ()=>{ H.fav = !H.fav; updateFavBtn(); hubFilter(); });
 document.addEventListener("keydown", e=>{
   if(e.key==="/" && curView==="hub" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){ e.preventDefault(); const q = document.getElementById("hq"); q.focus(); q.select(); }
@@ -1617,6 +1641,7 @@ document.getElementById("view-hub").addEventListener("click", e=>{
     const k = ex.dataset.expand, card = document.getElementById("r-"+k), wasOpen = openSet.has(k) || hAllOpen;
     if(wasOpen){ openSet.delete(k); } else openSet.add(k);
     const item = HITEMS.find(i=>i.key===k);
+    if(!wasOpen && !textReady(item)) ensureText(item).then(()=>{ const c = document.getElementById("r-"+k); if(c && openSet.has(k)){ const d = document.createElement("div"); d.innerHTML = itemHTML(item); c.replaceWith(d.firstElementChild); } });
     const tmp = document.createElement("div");
     const keep = hAllOpen; if(wasOpen) hAllOpen = false;
     tmp.innerHTML = itemHTML(item); hAllOpen = keep;
@@ -1648,15 +1673,7 @@ document.getElementById("view-hub").addEventListener("click", e=>{
 });
 
 /* ---------- 手冊 → 函釋：每個碼別卡片下方「查相關函釋」 ---------- */
-function fillManualCounts(){
-  document.querySelectorAll("[data-hubq]").forEach(a=>{
-    const code = a.dataset.hubq.toLowerCase();
-    const re = new RegExp(reEsc(code) + "(?![0-9a-z])", "i");
-    const n = HITEMS.filter(i=>re.test(i._s)).length;
-    a.querySelector(".n").textContent = n ? `（${n} 則）` : "";
-    if(!n) a.closest(".hublink-wrap").style.display = "none";
-  });
-}
+function fillManualCounts(){ /* 全文改為按需載入，按鈕不再預先顯示則數 */ }
 document.getElementById("view-manual").addEventListener("click", e=>{
   const a = e.target.closest("[data-hubq]");
   if(!a) return;
