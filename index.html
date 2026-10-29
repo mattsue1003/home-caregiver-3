@@ -415,6 +415,20 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 .topbtn{background:linear-gradient(135deg,#123F91,#2F9BE0)}
 .chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal)}
 .favbtn[aria-pressed="true"]{background:#FFF6DD;border-color:#E8A317}
+
+/* 操作教學影片 */
+.tutbtn{display:inline-flex;align-items:center;gap:6px;margin:10px 0 2px;border:1.5px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:6px 16px;font-size:15px;font-weight:700}
+.tutbtn:hover{background:#fff;color:#123F91}
+.tut{position:fixed;inset:0;z-index:60;background:rgba(8,24,47,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.tut[hidden]{display:none}
+.tut-card{width:min(980px,100%);background:#fff;border-radius:16px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.tut-hd{display:flex;justify-content:space-between;align-items:center;margin:0 4px 10px}
+.tut-hd h2{margin:0;font-size:19px;color:var(--ink)}
+.tut-x{border:none;background:var(--teal-soft);width:36px;height:36px;border-radius:18px;font-size:16px;color:var(--ink)}
+.tut video{width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;display:block}
+.tut-ch{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;font-size:14px;color:var(--muted)}
+.tut-ch button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:3px 12px;font-size:14px;color:var(--teal-deep)}
+.tut-ch button:hover{border-color:var(--sky);background:var(--sky-soft)}
 </style>
 </head>
 <body>
@@ -431,7 +445,7 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 
 <header class="masthead">
   <div class="wrap">
-    <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>居家服務教戰手冊</h1>
+    <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>居家服務教戰手冊</h1><button type="button" class="tutbtn" data-tut>▶ 第一次使用？看 2 分鐘操作教學</button>
     <p>依《長期照顧服務申請及給付辦法》及其附表四「照顧組合表」（114 年 6 月 19 日衛部顧字第 1141961114 號令修正發布，分階段自 114 年 9 月 1 日、115 年 1 月 1 日、115 年 7 月 1 日施行；114 年 10 月 3 日勘誤），並納入衛生福利部相關函釋整理。每個碼別分成「附表規定、一定要做、絕對不要、常見誤區、執行細節、互斥與搭配」六段，新手照著做、老手快速查、督導處理申訴與異常時對照用。</p>
     <div class="legend">
       <span><i style="background:var(--teal)"></i>一定要做</span>
@@ -587,7 +601,7 @@ mark{background:#FFE39A;color:inherit;border-radius:3px;padding:0 1px}
 <div class="view" id="view-hub" hidden>
 <header class="masthead hub-head">
   <div class="wrap">
-    <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>長照相關函釋查詢</h1>
+    <h1><span>整理者｜愛迪樂　鍾孟修 職能治療師</span>長照相關函釋查詢</h1><button type="button" class="tutbtn" data-tut>▶ 第一次使用？看 2 分鐘操作教學</button>
     <p>衛生福利部與全台 22 縣市的長照函釋、轉知與縣市自訂規定，每則都有一句話重點、全文與原文出處（可下載公文），依日期由新到舊。</p>
     <div class="legend">
       <span><i style="background:var(--teal)"></i>中央（衛生福利部）</span>
@@ -1664,8 +1678,9 @@ window.addEventListener("scroll", ()=>{
   const sc = document.getElementById("hub-list").getBoundingClientRect().top < 40;
   if(sc !== tools.classList.contains("scrolled")){ tools.classList.toggle("scrolled", sc); if(!sc) { tools.classList.remove("open"); document.getElementById("hFilt").setAttribute("aria-expanded","false"); } }
 }, {passive:true});
+let noAutoUntil = 0;
 if("IntersectionObserver" in window){
-  new IntersectionObserver(es=>{ if(es[0].isIntersecting && hubReady && lastList.length>hShown && hShown<200){ hShown += 20; hubFilter(true); } }, {rootMargin:"600px"}).observe(document.getElementById("hMore"));
+  new IntersectionObserver(es=>{ if(es[0].isIntersecting && Date.now() > noAutoUntil && hubReady && lastList.length>hShown && hShown<200){ hShown += 20; hubFilter(true); } }, {rootMargin:"600px"}).observe(document.getElementById("hMore"));
 }
 document.getElementById("view-hub").addEventListener("click", e=>{
   const t = e.target;
@@ -1698,7 +1713,7 @@ document.getElementById("view-hub").addEventListener("click", e=>{
   const pick = t.closest("[data-pick]");
   if(pick){ H.src = pick.dataset.pick; document.getElementById("hSrc").value = H.src; hubFilter(); document.getElementById("hub-list").scrollIntoView({block:"start"}); return; }
   const go = t.closest("[data-goto]");
-  if(go){ e.preventDefault(); document.getElementById(go.dataset.goto).scrollIntoView({block:"start"}); return; }
+  if(go){ e.preventDefault(); noAutoUntil = Date.now() + 2500; document.getElementById(go.dataset.goto).scrollIntoView({block:"start"}); return; }
   const ref = t.closest("[data-ref]");
   if(ref){
     e.preventDefault();
@@ -1722,7 +1737,29 @@ document.getElementById("view-manual").addEventListener("click", e=>{
   showView("hub");
   loadHub().then(()=>{ applyHashState(); window.scrollTo({top:0}); });
 }, true);
+
+/* ---------- 操作教學影片（彈窗放在頁尾，點擊時才取元素） ---------- */
+(function(){
+  const els = () => [document.getElementById("tut"), document.getElementById("tutV")];
+  const close = () => { const [box, v] = els(); if(box){ box.hidden = true; v.pause(); } };
+  document.addEventListener("click", e => {
+    const [box, v] = els(); if(!box) return;
+    if(e.target.closest("[data-tut]")){ e.preventDefault(); box.hidden = false; v.play().catch(()=>{}); return; }
+    if(e.target.closest("[data-tutclose]") || e.target === box){ close(); return; }
+    const s = e.target.closest("[data-seek]");
+    if(s){ const go = () => { v.currentTime = +s.dataset.seek; v.play().catch(()=>{}); };
+      if(v.readyState >= 1) go(); else { v.preload = "auto"; v.addEventListener("loadedmetadata", go, {once:true}); v.load(); } }
+  });
+  document.addEventListener("keydown", e => { const [box] = els(); if(e.key === "Escape" && box && !box.hidden) close(); });
+})();
 </script>
+<div class="tut" id="tut" hidden role="dialog" aria-modal="true" aria-labelledby="tutT">
+  <div class="tut-card">
+    <div class="tut-hd"><h2 id="tutT">兩分鐘學會怎麼用</h2><button type="button" class="tut-x" data-tutclose aria-label="關閉">✕</button></div>
+    <video id="tutV" controls playsinline preload="none" poster="media/tutorial_poster.jpg"><source src="media/tutorial.mp4" type="video/mp4"></video>
+    <div class="tut-ch"><span>跳到：</span><button type="button" data-seek="0.5">開始</button><button type="button" data-seek="13.3">手冊查碼別</button><button type="button" data-seek="38.8">函釋搜尋</button><button type="button" data-seek="58.2">篩選條件</button><button type="button" data-seek="75.5">讀一則函釋</button><button type="button" data-seek="99.8">縣市入口</button><button type="button" data-seek="111.8">回報問題</button></div>
+  </div>
+</div>
 <script>
 window.REPORT_CONTEXT = () => {
   const hub = !document.getElementById("view-hub").hidden;
