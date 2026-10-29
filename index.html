@@ -1683,5 +1683,23 @@ document.getElementById("view-manual").addEventListener("click", e=>{
   loadHub().then(()=>{ applyHashState(); window.scrollTo({top:0}); });
 }, true);
 </script>
+<script>
+window.REPORT_CONTEXT = () => {
+  const hub = !document.getElementById("view-hub").hidden;
+  const m = location.hash.match(/id=([^&]+)/);
+  let it = m && typeof HITEMS !== "undefined" ? HITEMS.find(i => i.key === decodeURIComponent(m[1])) : null;
+  if (!it && hub && typeof lastList !== "undefined" && lastList.length === 1) it = lastList[0];
+  return it ? {item: it.no || it.key, itemName: it.title} : {item: hub ? "函釋查詢" : "教戰手冊", itemName: (hub ? "長照相關函釋查詢 " : "居家服務教戰手冊 ") + location.hash};
+};
+window.addEventListener("load", () => {
+  const h = document.querySelector("[data-oth-report]"); const f = h && h.shadowRoot && h.shadowRoot.querySelector(".fab");
+  if (!f) return;
+  Object.assign(f.style, {padding: "5px 10px", fontSize: "12px", gap: "4px", opacity: ".72", boxShadow: "0 2px 8px rgba(0,0,0,.14), 0 0 0 1px #028090 inset"});
+  f.title = "回報錯誤或給建議";
+  f.addEventListener("mouseenter", () => f.style.opacity = "1"); f.addEventListener("mouseleave", () => f.style.opacity = ".72");
+  const svg = f.querySelector("svg"); if (svg) { svg.style.width = "13px"; svg.style.height = "13px"; }
+});
+</script>
+<script src="https://mattsue1003.github.io/oth-report-button/report.js" data-site="居家服務教戰手冊・長照函釋查詢" data-label="回報" data-color="#028090" data-position="left" data-offset="14" defer></script>
 </body>
 </html>
